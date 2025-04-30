@@ -1,6 +1,14 @@
-ps aux | grep uvicorn# === Imports === from fastapi import FastAPI, Request from gpt4all import GPT4All import os 
-os.environ["GPT4ALL_FORCE_CPU"] = "true" from fastapi.middleware.cors import CORSMiddleware from pydantic import BaseModel from 
-sentence_transformers import SentenceTransformer import pandas as pd import numpy as np import faiss
+#=== Imports === 
+from fastapi import FastAPI, Request 
+from gpt4all import GPT4All 
+import os 
+os.environ["GPT4ALL_FORCE_CPU"] = "true" 
+from fastapi.middleware.cors import CORSMiddleware 
+from pydantic import BaseModel 
+from sentence_transformers import SentenceTransformer 
+import pandas as pd 
+import numpy as np 
+import faiss
 
 # === App setup ===
 app = FastAPI()
