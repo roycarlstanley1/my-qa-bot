@@ -4,3 +4,21 @@ __pycache__/
 *.index
 *.pyc
 .DS_Store
+
+# Ignore Python virtual environments
+venv/
+
+# Bytecode files
+__pycache__/
+*.py[cod]
+
+# Data artifacts
+*.pkl
+*.index
+
+# OS and editor junk
+.DS_Store
+*.swp
+
+# Jupyter/IPython checkpoints (if used later)
+.ipynb_checkpoints/
