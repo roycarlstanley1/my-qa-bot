@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+pydantic
+pandas
+faiss-cpu
+sentence-transformers
+
+# for future development notes
+notebook
+ipykernel
+
+# for future production tests
+gunicorn
+python-dotenv
+loguru
