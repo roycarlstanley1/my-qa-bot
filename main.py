@@ -1,20 +1,15 @@
-# === Imports ===
-from gpt4all import GPT4All
-import os
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from sentence_transformers import SentenceTransformer
-import pandas as pd
-import numpy as np
-import faiss
+ps aux | grep uvicorn# === Imports === from fastapi import FastAPI, Request from gpt4all import GPT4All import os 
+os.environ["GPT4ALL_FORCE_CPU"] = "true" from fastapi.middleware.cors import CORSMiddleware from pydantic import BaseModel from 
+sentence_transformers import SentenceTransformer import pandas as pd import numpy as np import faiss
 
 # === App setup ===
 app = FastAPI()
 
-model_path = "./models/mistral-7b-instruct.ggmlv3.q4_0.bin"
-local_llm = GPT4All(model_name=model_path)
+MODEL_PATH = os.path.expanduser("~/.cache/gpt4all/Meta-Llama-3-8B-Instruct.Q4_0.gguf")
+local_llm = GPT4All("Meta-Llama-3-8B-Instruct.Q4_0.gguf", allow_download=True)
 
+
+# === Fallback handler ===
 def call_rag_fallback(question: str, context_chunks: list[str]) -> str:
     context_text = "\n".join(context_chunks)
     prompt = f"""
@@ -58,15 +53,14 @@ Question: {question}
 Answer:"""
 
     with local_llm.chat_session() as session:
-        return session.prompt(prompt)
+        return session.generate(prompt)
 
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],    allow_headers=["*"],
 )
 
 # === Load Data ===
@@ -76,8 +70,8 @@ questions = df['Question'].tolist()
 answers = df['Answer'].tolist()
 
 # Embed all questions
-model = SentenceTransformer('all-MiniLM-L6-v2')
-question_embeddings = model.encode(questions)
+embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
+question_embeddings = embedding_model.encode(questions)
 
 # Build FAISS index
 dimension = question_embeddings.shape[1]
@@ -94,23 +88,20 @@ async def ask_question(request: QuestionRequest):
     user_question = request.question
 
     # Embed user's question
-    user_embedding = model.encode([user_question])
+    user_embedding = embedding_model.encode([user_question])
 
-    # Search top 3 closest matches
-    distances, indices = index.search(np.array(user_embedding).astype('float32'), k=3)
+    # Search top 3 matches regardless of distance
+    distances, indices = index.search(np.array(user_embedding).astype('float32'), k=5)
 
-    THRESHOLD = 1.5  # you can adjust this based on real-world testing
+    # Extract top Q&A pairs
+    context_chunks = []
+    for idx in indices[0]:
+        if idx < len(questions) and idx < len(answers):
+           question = questions[idx]
+           answer = answers[idx]
+           context_chunks.append(f"Q: {question}\nA: {answer}")
 
-    # If all matches are too far, fallback
-    if all(dist > THRESHOLD for dist in distances[0]):
-        return {"answer": "Sorry, I don't know the answer to that."}
 
-    # Otherwise, suggest multiple options
-    response = "Here's what you can try:\n"
-    for rank, (distance, idx) in enumerate(zip(distances[0], indices[0]), start=1):
-        if distance <= THRESHOLD:
-            response += f"{rank}. {answers[idx]}\n"
-
-    response += "\nIf none of these help, please contact support."
-
-    return {"answer": response}
+    # Use LLM to answer based on context
+    answer = call_rag_fallback(user_question, context_chunks)
+    return {"answer": answer}

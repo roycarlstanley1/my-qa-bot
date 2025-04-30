@@ -4,6 +4,7 @@ pydantic
 pandas
 faiss-cpu
 sentence-transformers
+gpt4all
 
 # for future development notes
 notebook
