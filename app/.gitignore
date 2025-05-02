@@ -1,0 +1,18 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+
+# GPT4All and LLM-related
+.cache/
+*.gguf
+*.bin
+
+# Env files
+.env
+
+# Logs
+*.log
+
+# System files
+.DS_Store

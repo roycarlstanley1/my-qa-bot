@@ -1,0 +1,897 @@
+﻿Question,Answer
+What URL does the ECI DCA use to register?,The DCA registers using https://reg.pf-d.ca.
+How does Printanista Hub license validation work?,Printanista Hub licenses are activated manually by submitting a public key through GTTechOnline; there is no automatic license validation URL.
+Where do you retrieve a Printanista Hub license?,From https://www.gttechonline.com/secured/login.asp?Page=/secured/DistAcctInfo.asp? using the dealer's technical credentials.
+Is the technical login for Printanista licensing the same as SQL access?,"Yes, it uses the same credentials but has read-only access inside the SQL database."
+What is the Printanista to eAutomate integration method?,"Printanista creates a web service authentication token under Admin > Syncs > Settings, which is entered in eAuto under Tools > Options > Equipment > Printanista."
+What versions of macOS are supported for FMAudit Java Onsite?,Supported macOS versions are Sierra (10.12) through Sequoia (15.4); newer macOS versions are unsupported.
+What is the fallback method if WebSocket connections fail in Printanista DCA?,"The fallback is Long Polling, but WebSockets are preferred for real-time communications."
+What server is used for Printanista DCA software updates?,The update server is https://updates.printfleetcdn.com.
+What TLS versions are allowed by the ECI DCA?,TLS 1.2 is allowed; TLS 1.3 is not currently enabled.
+Where is the DCA log file located?,C:\\ProgramData\\ECI DCA\\logs\\dca.log.
+What encryption method is used for Printanista collected data?,Data is encrypted in transit using HTTPS and TLS 1.2.
+Where can you manually upload a system license in Printanista Hub?,Under Admin > Licensing.
+What service ports are required for Printanista Hub IIS?,Port 443 for HTTPS is required.
+How does Remote Device Link (RDL) secure communications?,RDL uses HTTPS (TLS 1.2) to secure remote device access.
+How are firmware versions captured by Printanista DCA?,Firmware versions are collected via SNMP during network scans.
+What is the backup behavior for Printanista Hub databases?,Backup policies are dealer-managed; ECI recommends nightly SQL backups.
+Can DCA update if a firewall blocks access to PrintFleet servers?,"No, the DCA must reach update servers or updates will fail."
+What happens if a DCA license expires?,The DCA will stop transmitting data until relicensed manually.
+What URL does the DCA Hub connect to after registration?,https://meters.mydoceo.com/dcahub/signalr/.
+Is SMTP required for Printanista Hub operation?,SMTP is required for notifications but not for core functionality.
+Can you use a self-signed certificate for Printanista Hub?,"Yes, but a trusted CA certificate is highly recommended for production environments."
+What SQL versions are supported for Printanista Hub?,SQL Server 2016 or newer (recommended SQL 2019).
+Does Printanista Hub support SQL Always-On availability groups?,"No, only standard SQL Server deployments are officially supported."
+Is GDPR compliance addressed in Printanista Hub?,"Yes, Printanista includes data privacy compliance options aligning with GDPR standards."
+What data types are collected by Printanista DCA?,"Device attributes, meters, supply levels, and some network attributes."
+Does FMAudit Onsite support USB devices?,"Yes, but must be enabled in the Onsite configuration under 'Local Printer Discovery.'"
+What is the SNMP fallback behavior if a device doesn't respond?,"Retry up to 2 times, then mark as offline until next scan interval."
+Where are collected SNMP scan results stored temporarily?,Within the DCA local cache before being transmitted to Hub Central.
+How does DCA detect sleep or offline printers?,Via periodic ping (ICMP) and SNMP reachability tests.
+How does FMAudit handle SNMPv3 devices?,Currently SNMPv1 and SNMPv2c are primary; SNMPv3 requires manual credential entry if supported.
+What happens if GTTechOnline is unavailable?,Licenses must be manually requested via ECI support if GTTechOnline is unreachable.
+Does Printanista Hub require Internet access?,"Yes, for licensing validation, updates, and remote management."
+What is the default SNMP community string used by DCA?,"'public' is the default, but can be customized."
+What is the recommended Windows Server OS for Printanista Hub?,Windows Server 2016 or 2019.
+Where are FMAudit Central application logs stored?,Typically under C:\\Program Files (x86)\\FMAudit\\Central\\Logs.
+How often does the DCA check for software updates?,Approximately once per hour.
+Can Printanista Hub send alerts based on supply levels?,"Yes, supply-based alerts can be configured per customer."
+Are VPN connections supported for DCA reporting?,"Yes, as long as DNS and HTTPS traffic are not blocked."
+How does Printanista detect devices behind NAT?,"It uses MAC address, serial number, and model matching across accounts."
+Where can you configure the offline grace period for devices?,Inside the DCA settings file under 'DisconnectedDeviceGracePeriod'.
+What SNMP versions does Printanista DCA support?,SNMPv1 and SNMPv2c primarily.
+Can Printanista Hub be installed on a domain controller?,"No, it is strongly discouraged for security and stability reasons."
+What port does the Printanista DCA use locally for its web UI?,Default is TCP 31816.
+What format is used for DCA auto-update configuration files?,JSON format.
+Can FMAudit Viewer operate standalone?,"No, it requires communication with an active FMAudit Central server."
+Does Printanista Hub support multifactor authentication?,MFA is not natively supported as of version 5.0.
+How does DCA detect newly added printers?,Scheduled SNMP scans across defined IP ranges.
+Where is the Central.XML file used?,During Printanista Hub installation to configure connection settings.
+Can you change the Printanista Hub license later?,"Yes, re-upload the new license under Admin > Licensing."
+What are the backup DNS servers for ECI DCA registration?,ECI fallback DNS servers include AWS-based public IPs (18.221.x.x and 18.194.x.x ranges).
+How do I collect DCA logs for Printanista or FMAudit troubleshooting?,"You can collect logs from C:\\ProgramData\\ECI DCA\\logs or use the web interface at http://localhost:31816, then go to Support > Download Logs."
+What are the methods for triggering debug logs in the DCA?,Set 'Trace=true' and 'Debug=true' in the DCA config file or enable debug from the local web UI.
+Where can I find Central logs for Printanista or FMAudit?,"Central logs are found in the Central application directory, typically under Program Files or ProgramData depending on deployment."
+How do I collect logs when Printanista devices aren’t updating?,"Ensure DCA logs, SNMP logs, and hub sync logs are collected; check device scan results and communication timestamps."
+What ports must be open for Printanista DCA communication?,Port 443 outbound for HTTPS and optionally port 31816 local for web interface access.
+What does the DCA use for SNMP communication?,"It uses SNMPv1 or v2c, default community string is usually 'public', with support for custom strings per scan range."
+Where do I set custom SNMP communities in DCA?,"In the DCA local web interface, under Network Discovery > Scan Ranges > Edit."
+What causes SNMP 'NoSuchName' errors in logs?,Usually invalid OIDs or unsupported SNMP versions on the target printer; check firmware and community strings.
+Why would a device not show up in Printanista despite being on the network?,"Common reasons include: not in scan range, SNMP blocked, incorrect community string, or device offline during scan."
+What’s the purpose of the Edge ID in DCA logs?,"Edge ID uniquely identifies the local DCA install for registration, communication, and licensing purposes."
+What’s the difference between FMAudit Onsite and ECI DCA?,"FMAudit Onsite is the legacy collector, while ECI DCA is the modern collector used with Printanista and supports more features."
+What should I do if my DCA is stuck in 'Disconnected' status?,"Check firewall, internet connectivity, registration status, and whether the DCA can reach meters.mydoceo.com."
+How do I know which devices were matched successfully in a DCA scan?,"Logs will show 'Device MATCHED' entries with IP, MAC, model, and serial number when matching succeeds."
+What is the role of the Central.XML file during setup?,It defines initial connection parameters and credentials between Printanista Hub and Central during installation.
+How do I re-run initial Printanista Hub license activation?,Go to Admin > Licensing and paste the new license string provided via GTTechOnline or ECI Support.
+Can I license multiple Printanista Hubs from the same portal?,"Yes, each Hub instance has its own unique public key and license string, but they're managed under the same GTTechOnline login."
+What’s the default refresh interval for SNMP scans?,Typically every 30–60 minutes depending on scan profile settings.
+Can I export meter data from Printanista Hub?,"Yes, reports can be exported via the Reports section or API if integrated with E-Auto or a third-party system."
+What API format does Printanista use?,"JSON over HTTPS, using bearer token authentication for integrations like E-Auto or other systems."
+Where do I find the bearer token for EAuto integration?,In Printanista: Admin > Syncs > Settings > Web Service Authentication > Create Token.
+Does FMAudit Central use a token for EAuto?,"No, FMAudit uses web service credentials directly input into the integration settings rather than a bearer token."
+Can I deploy DCA on a non-Windows system?,Only FMAudit Java Onsite can be deployed on macOS or Linux; ECI DCA is Windows-only.
+Can I throttle scan frequency in DCA?,"Yes, intervals for meters, supplies, errors, and attributes can be configured independently in the scan configuration."
+What’s the default local port for FMAudit Central?,Typically port 80 or 443 depending on SSL configuration.
+Where can I see supply alerts in Printanista?,"In the Alerts section, under Supply Alerts or via the Device Dashboard if thresholds are configured."
+What kind of encryption is used for data at rest in Hub?,Data is encrypted using SQL Server encryption or file system controls depending on deployment.
+Does Printanista Hub require Active Directory integration?,"No, but it supports user role management internally; AD integration is not required for login."
+What happens if I reinstall DCA without removing the old one?,"A new Edge ID will be generated, which could duplicate device records unless the old one is deleted first."
+Can I delete an old Edge ID from the portal?,"Yes, via Printanista admin portal under DCA Management or by contacting support."
+What’s the expected behavior if the DCA scan range is too broad?,"It may cause timeouts, missed scans, or excessive CPU/network load; best practice is to narrow ranges per subnet."
+What file controls DCA scan ranges?,Configured via the local web UI or manually edited via the JSON configuration file (dca.config).
+What is the role of the MAC address in device matching?,It’s used along with model and serial to match devices accurately even if IPs change.
+What’s the function of the ‘DisconnectedDeviceGracePeriod’ setting?,"It allows devices to stay visible for a set period (e.g., 10 minutes) after they go offline."
+Can I check TLS version used in a DCA connection?,"Yes, logs will show TLS version (e.g., 'TLS 1.2 enabled') during Hub connection startup."
+What should I look for in a license validation failure?,"Check for bad public key, expired license, GTTechOnline outage, or incorrect pasting of license string."
+Where do I enter license keys in Printanista Central?,Under Admin > Licensing > Paste License > Save.
+Can I use Printanista in a disconnected environment?,"Not recommended; it requires internet access for updates, licensing, and remote sync."
+How do I handle SNMP 'NoSuchName' errors for HP MIBs?,"Update firmware, validate OIDs, or consult the SNMP walkthrough logs for the failing object ID."
+What are typical DCA log file names?,dca.YYYY-MM-DD.#.log — rolled daily or on each restart.
+What does 'EdgeEngine' mean in DCA logs?,"It refers to the local service managing SNMP, transport, and registration logic."
+What is 'HubConnection' in logs?,The process managing the WebSocket/SignalR link to Printanista Hub Central.
+How does the DCA fallback to long polling?,"If WebSocket connection fails, it automatically attempts Long Polling mode and logs the downgrade."
+What are common causes of 'SNMP Timeout'?,"Blocked port 161, incorrect community, or the printer being offline or in deep sleep."
+What are fallback DNS servers for ECI registration?,"AWS-based DNS servers (e.g., 18.221.x.x, 8.8.8.8) are listed in the DCA config."
+Where is the DCA web interface hosted locally?,Default is http://localhost:31816.
+Can multiple DCAs report to the same Printanista Hub?,"Yes, as long as each DCA has a unique Edge ID and is properly licensed."
+Can I manage multiple customers with one DCA?,"No, each customer/account should have a dedicated DCA for security and data separation."
+How are alerts configured in FMAudit Central?,Alerts are configured under the Alert Settings menu and tied to meter or supply conditions.
+What are signs of SNMP misconfiguration in logs?,Repeated 'NoSuchName' or timeout entries for known OIDs are a clear indicator.
+What happens if the DCA config file is corrupted?,The DCA will fail to start properly; reinstallation or restoring a backup config is recommended.
+Can DCA update through a proxy server?,"Yes, if the proxy settings are properly detected or manually configured in the dca.config file."
+Where can I check DCA proxy settings?,"Proxy usage is logged during startup, or can be manually reviewed in the dca.config."
+What file controls DCA logging level?,dca.config; adjust 'Trace' and 'Debug' flags.
+What triggers DCA auto-update checks?,Startup and periodic scheduled checks based on the AutoUpdate interval in config.
+What is the fallback update behavior if update servers are unreachable?,The DCA continues running without updates and retries at next interval.
+Can FMAudit Onsite run without Central?,"No, Onsite needs Central for license validation and reporting."
+How does Printanista manage duplicate devices?,"Device matching is based on serial number, MAC address, and model to avoid duplication."
+What happens if a printer changes IP address?,"As long as serial and MAC are the same, Printanista will re-map it automatically."
+Where can I customize device matching rules in Hub?,Device matching rules are mostly internal but some behaviors can be modified via Admin policies.
+Can I use a custom SSL certificate for DCA web interface?,"Yes, replace the default certificate binding manually via IIS or service configuration."
+What happens when the DCA server clock is out of sync?,TLS connections to Printanista servers may fail due to SSL certificate validation errors.
+What indicates SSL handshake failure in DCA logs?,"Look for 'TLS error', 'SSL validation failed', or 'Handshake failed' entries."
+What happens if the DCA license expires?,The agent stops sending meter data but continues internal scans until a new license is applied.
+What causes 'Hub ping timeout' errors in DCA logs?,"Likely connectivity issues, firewall blocking, or Hub Central being unreachable."
+Where is the SNMP walk output saved in DCA?,SNMP walk output is temporarily cached in memory unless a debug log is explicitly captured.
+What is 'OnsiteDataProcessingThread' in logs?,It’s the thread responsible for parsing local device scans and inserting data into Hub.
+Can I disable auto-updates for the DCA?,"Yes, by setting 'AutoUpdateReleaseChannel' to 'none' or disabling auto-update in config."
+What security standard does Printanista HTTPS communications meet?,TLS 1.2 encryption with strong cipher suites.
+How are device alerts triggered in Printanista?,"Based on thresholds for meters, toner levels, or error states defined per device."
+What authentication methods does Printanista Hub support for Admin login?,Username/password; MFA is not natively supported.
+What’s the typical DCA install size on disk?,Approximately 50–100MB depending on logs and temporary data.
+What does 'DeviceAdded' mean in DCA logs?,The DCA has discovered a new device IP during a scan and is attempting to report it.
+How are license strings formatted for Hub?,Base64-encoded license blocks that include metadata about account and expiration.
+What happens if you paste an invalid license in Printanista?,License validation fails immediately with a visible error message.
+How does Printanista handle WAN-disconnected branches?,Agents (DCA) can operate locally and sync once internet access is restored.
+What is the DCA maximum concurrent SNMP thread limit?,Default is 100 concurrent SNMP sessions unless customized in the config.
+Can DCA scan multiple subnets?,"Yes, you can define multiple IP ranges in Network Discovery settings."
+What triggers an auto-retry of Hub connection?,Connection interruptions exceeding timeout thresholds trigger automatic reconnection attempts.
+What ports must be open for FMAudit Onsite to Central communication?,Ports 80 or 443 outbound depending on SSL setup.
+What is the minimum RAM recommended for DCA installations?,"4GB minimum is recommended for stable operation, but 8GB is preferred for heavy environments."
+What does 'MdsAuthorization' mean in DCA logs?,It relates to device authorization handshake for remote service integrations like eAuto.
+What happens if Printanista loses contact with a DCA?,Hub will mark devices as stale after the offline grace period lapses.
+Where can I find the public key for Printanista licensing?,Admin > Licensing > Copy Public Key.
+How does DCA handle mixed SNMP versions across networks?,"It attempts SNMPv2 first; if unavailable, it falls back to SNMPv1."
+How are DCA crash dumps handled?,Crash reports are saved locally and can be submitted manually to ECI support for analysis.
+What metrics are monitored in DCA health checks?,"Device discovery rate, failed SNMP responses, hub connectivity, and supply thresholds."
+How are offline devices flagged in Hub?,"After the DisconnectedDeviceGracePeriod expires, devices are marked offline automatically."
+What does 'ProcessedValueChanged' mean in DCA logs?,It indicates successful update of a scanned SNMP value from previous state.
+Is VPN tunneling supported for DCA communication?,"Yes, if DNS resolution and HTTPS traffic are properly routed through the tunnel."
+What is the fallback registration server if reg.pf-d.ca is down?,Registration retries fallback IPs embedded in DCA config.
+Can I modify DCA service startup order?,"Yes, using Windows Service Manager but not recommended unless troubleshooting race conditions."
+What happens when an invalid SNMP OID is scanned?,Logged as 'NoSuchName' or 'OID invalid' but does not crash the scan process.
+What should I include in a DCA debug log submission?,"Full DCA log folder, dca.config, and screenshots of local settings if possible."
+What happens if two DCAs report for the same customer?,Duplicate devices may appear unless Edge IDs and scan ranges are properly isolated.
+Can you throttle SNMP retries to reduce network load?,"Yes, configure 'SnmpRetries' and 'SnmpTimeout' in the DCA settings."
+Where is the ECI Updates server hosted?,Updates come from Amazon CloudFront (printfleetcdn.com).
+What is the difference between Hub's 'device discovered' and 'device matched'?,"Discovery means seen by IP; matching confirms correct serial, model, and MAC address."
+What triggers a meter alert in Printanista?,Crossing a defined threshold for monochrome or color meter counts triggers meter alerts.
+Question,Answer
+What are the steps to activate a Printanista Hub license?,1. Log into the Hub and go to Admin > Licensing. 2. Copy the Public Key. 3. Log into https://www.gttechonline.com using your technical credentials. 4. Retrieve the License String. 5. Paste it back into the Licensing page in Printanista. 6. Click Save.
+How do I collect logs for a Printanista DCA that's not showing devices?,1. Open the DCA local web UI at http://localhost:31816. 2. Go to Support > Download Logs. 3. Include dca.config and any recent .log files from C:\\ProgramData\\ECI DCA\\logs. 4. Check if the scan ranges and SNMP settings are correct. 5. Submit logs to ECI support if needed.
+How do I validate a suspected SNMP mismatch in DCA logs?,1. Look for 'NoSuchName' or SNMP timeout errors. 2. Note the OID and device model. 3. Verify if the device supports that OID using an SNMP walk. 4. Cross-check the scan definition file if available.
+What steps should I follow if Printanista devices are missing after reinstalling the DCA?,1. Confirm that the new DCA install generated a new Edge ID. 2. Log into Hub and check under Admin > DCA Management. 3. Remove the old Edge ID if it's no longer valid. 4. Ensure new scan ranges are defined. 5. Monitor logs for device discovery and match confirmations.
+How do I create a new API key for a third-party Printanista integration?,"1. Log into https://admin.printfleetcentral.com. 2. Go to API Keys > Accounts. 3. Search for the dealer account. 4. If not found, click Add New Developer. 5. Fill in the company, contact, and intended use. 6. Click Add Key > Choose system > Set access and expiry. 7. Copy the license key and provide to third party."
+What steps should I follow when troubleshooting a failed EAuto sync from Printanista?,1. Check Admin > Syncs > Logs in Printanista. 2. Verify token is valid under Admin > Syncs > Settings. 3. Confirm Printanista URL and token are entered correctly in eAuto. 4. Re-create token if expired. 5. Check firewall rules or proxy settings if HTTPS fails.
+How do I verify a Printanista Hub is properly using HTTPS?,1. Open IIS Manager on the server. 2. Check site bindings for port 443 with SSL certificate assigned. 3. Access the Hub URL using https:// to ensure no browser security warnings appear. 4. Review SSL certificate issuer and expiration.
+How do I reset a forgotten Printanista Admin password?,1. Access the SQL Server hosting the Hub DB. 2. Run a query to reset the admin password or create a new user with admin rights. 3. Restart the Hub application pool if needed. 4. Log in and update credentials immediately.
+How can I isolate SNMP scan issues on a per-device basis?,"1. Use SNMP Walk tool from the DCA or external SNMP utility. 2. Test known working OIDs (e.g., 1.3.6.1.2.1.1.5.0 for hostname). 3. Compare against expected OIDs from the scan definition. 4. Look for SNMPv1 vs. v2c mismatches. 5. Check firewall logs or ACLs."
+How do I configure an SNMP-only scan profile in DCA?,1. Open the DCA local web interface. 2. Go to Network Discovery > Add Range. 3. Enter IP range and select SNMP scan only. 4. Set community string (default is 'public'). 5. Save and wait for scan interval to complete.
+How do I verify a DCA is licensed and reporting correctly to Printanista?,1. Go to DCA local UI > Status. 2. Check Hub Connection status (should be Connected). 3. Review License Expiry date. 4. Confirm recent logs show device scan and match activity. 5. Log into Printanista and look for device updates from that Edge ID.
+What steps should I follow to replace a DCA on a client site?,1. Uninstall the old DCA or stop the service. 2. Install the new DCA on a dedicated server. 3. Configure scan ranges and SNMP communities. 4. Confirm new Edge ID is active. 5. Log into Printanista > Admin > DCA Management > Remove the old DCA if inactive.
+How do I troubleshoot 'ProcessedValueChanged' errors in logs?,"1. Identify the SNMP OID and device involved. 2. Confirm device supports the value. 3. Compare with previous value to see if it's a legitimate change. 4. If pattern is frequent or invalid, check for firmware bugs or incorrect scan definitions."
+How do I escalate a license issue when GTTechOnline is down?,"1. Retrieve the Public Key from Hub > Admin > Licensing. 2. Email support@ecisolutions.com with the public key, account info, and context. 3. CC your manager and note urgency. 4. ECI will generate the license string manually and return it via email."
+What steps are needed to convert FMAudit Viewer data to Printanista?,1. Export the viewer's XML or CSV data. 2. Contact ECI support to evaluate data format. 3. Import via Printanista's Admin > Bulk Import tools or use API if applicable. 4. Validate meters and devices match expectations.
+How do I generate a manual SNMP walk from DCA logs?,"1. Enable debug mode in DCA. 2. Trigger a scan manually. 3. Review log file (e.g., snmp.YYYY-MM-DD.#.log). 4. Look for sequence of OIDs retrieved. 5. Save logs for device-specific troubleshooting."
+How do I verify WebSocket connection success from DCA to Hub?,"1. Check DCA logs for 'Connected using webSockets'. 2. Note the connection ID. 3. Confirm stable heartbeat intervals. 4. If fallback occurs, logs will indicate switch to Long Polling."
+How do I adjust scan frequency to reduce load in large environments?,"1. Open the DCA UI. 2. Edit the scan profile. 3. Increase meter/supply/error intervals (e.g., from 1 hour to 4 hours). 4. Save and monitor device responsiveness."
+How do I securely export all device data from Printanista?,"1. Go to Reports > Device Summary or Inventory Export. 2. Filter by date, location, or model if needed. 3. Export to CSV or PDF. 4. Ensure export is done via HTTPS connection. 5. Store report securely per company data policy."
+How do I know if DCA auto-updated successfully?,1. Check DCA logs at startup. 2. Look for 'Checking for updates' and 'Current version is up to date'. 3. Version number will appear in top logs. 4. You can also verify version in the local web UI footer.
+What should I do if the DCA isn't registering after installation?,"1. Open the dca.log and confirm it’s attempting to reach https://reg.pf-d.ca. 2. Ensure outbound HTTPS (443) is allowed on the firewall. 3. Check DNS resolution for reg.pf-d.ca. 4. Confirm correct system date/time to avoid TLS issues. 5. If logs show 'Registration failed', validate internet access and proxy settings. 6. Restart the DCA service after any config changes."
+How do I verify the DCA is actively sending data to Printanista Hub?,"1. Open http://localhost:31816 and check the status page. 2. Ensure the 'Hub Connection' shows 'Connected'. 3. Review logs for successful 'Device MATCHED' and 'ProcessedValueChanged' entries. 4. In Printanista, go to Admin > DCA Management and confirm the DCA is online with recent activity."
+How do I troubleshoot a sudden drop in discovered devices?,1. Check DCA logs for recent scan results — ensure devices are being pinged. 2. Verify SNMP is still enabled on printers. 3. Look for subnet changes or VLAN segmenting. 4. Review scan ranges to confirm they still include target devices. 5. Restart the DCA service to clear stale network state.
+How can I test if SNMP responses are valid from a target printer?,"1. Use SNMP Walk from the DCA UI or command line tool. 2. Start with base OID 1.3.6.1.2.1.1 (system info). 3. Confirm community string and SNMP version match the printer config. 4. If no response or 'NoSuchName', verify SNMP settings on the printer or firewall blocks."
+Why is FMAudit Onsite not forwarding data to Central?,1. Open Onsite settings and verify the Central URL. 2. Confirm Central is reachable over HTTPS. 3. Look at Onsite logs for transmission failures or licensing errors. 4. Check for expired Viewer license or Central auth failure. 5. Re-run the onboarding wizard if connection fails.
+What should I check if eAuto integration with Printanista fails?,"1. Go to Admin > Syncs > Logs and review the error output. 2. Confirm the token is still valid and not expired. 3. Verify the eAuto server can reach the Printanista URL. 4. If 'authentication failed', recreate the Web Service Token and reapply it in eAuto under Tools > Options."
+What does it mean if TLS handshake fails during DCA startup?,"It usually means a system clock mismatch, outdated Windows certificate store, or a proxy interfering with the connection. Update Windows, sync the clock, and test outbound connectivity using PowerShell: Test-NetConnection reg.pf-d.ca -Port 443."
+What causes long delays in SNMP scans for certain printers?,1. The printer may be slow to respond or have power-save modes. 2. Check SNMP Timeout and Retries in the config. 3. Reduce SNMP concurrency if network load is high. 4. Review device firmware or SNMP implementation bugs. 5. Use device-specific scan definitions if available.
+How do I isolate issues when Printanista device matches are inconsistent?,"1. Compare scan logs to see if MAC, serial, or hostname are fluctuating. 2. Check if duplicate MACs exist across subnets. 3. Validate if devices are behind NAT or remote subnets. 4. Ensure no overlap of scan ranges across multiple DCAs."
+How do I troubleshoot a Central service not starting?,1. Open Event Viewer and check for .NET or SQL errors. 2. Confirm IIS Application Pool is running and pointing to the correct directory. 3. Make sure SQL Server is reachable and the Central database is online. 4. Check for licensing errors in the logs.
+What should I check when device meters are not updating in Hub?,"1. Review DCA logs for successful SNMP scans. 2. Confirm 'ProcessedValueChanged' entries exist. 3. Make sure the scan profile includes meter OIDs. 4. If all else fails, walk the device manually to verify supported OIDs."
+Why does the DCA show 'Connected' but no devices appear in Hub?,"1. Check if scan ranges are defined. 2. Confirm SNMP discovery is enabled. 3. Look at DCA logs for 'Device MATCHED' or 'DeviceAdded'. 4. If missing, review firewall or VLAN segmentation. 5. Also confirm the device’s SNMP is enabled and reachable."
+What are signs that a license was pasted incorrectly in Hub?,"1. The license field may show as blank after save. 2. Admin > Licensing may show 'Not Licensed'. 3. Errors in the backend may show license parse or checksum failure. 4. Always paste the full block, including headers and footers, no extra spaces."
+What should I check when SMTP alerts aren’t sending from Printanista?,"1. Go to Admin > Email Settings. 2. Verify SMTP server, port, and TLS toggle. 3. Check sender and recipient addresses. 4. Review the SMTP log under the Admin section. 5. Confirm firewall allows outbound port 587 or 25. 6. Try telnet test from server to mail host."
+How do I verify SNMP community strings across multiple printers?,1. Log into each printer's web interface and check SNMP settings. 2. Ensure 'public' (or your custom string) is enabled for read access. 3. Use an SNMP walk with the same string for verification. 4. Document any variations and update scan profiles accordingly.
+What if I see the same printer listed twice in Printanista?,"1. Compare MAC, serial, and hostname fields. 2. If different Edge IDs report the same device, one may be stale. 3. Consolidate to the most recent DCA and disable the old one. 4. Open a support case if the system doesn’t de-duplicate automatically."
+What does the error 'Unable to convert value from OID' mean in logs?,"It means the printer responded with a value that doesn’t match expected format (e.g., null, corrupt, or non-decimal string). Often caused by firmware inconsistencies or unsupported MIBs."
+What are best practices for defining scan ranges in large environments?,1. Break IP space into logical subnets. 2. Limit each DCA to a max of 500 devices per range. 3. Use CIDR to define efficient blocks. 4. Avoid overlapping scan ranges across DCAs. 5. Use VLAN-specific subnets where possible.
+How do I know if a printer supports SNMPv3?,1. Review the printer's admin interface. 2. Check documentation for SNMPv3 support. 3. Try connecting using SNMPv3 credentials in a walk tool. 4. Be aware that DCA currently does not fully support SNMPv3 authentication.
+What should I include when submitting logs to ECI for analysis?,"1. Full contents of C:\\ProgramData\\ECI DCA\\logs. 2. dca.config. 3. Description of the issue and time of failure. 4. Screenshots if available. 5. Note if issue is related to licensing, device discovery, or sync."
+How can I test if a proxy server is interfering with DCA communication?,1. Open CMD and use curl to https://reg.pf-d.ca. 2. Review proxy settings in Windows Internet Options. 3. Disable proxy temporarily and restart DCA. 4. Review if logs show successful registration after proxy change.
+What could cause missing serial numbers in scanned devices?,1. Printer firmware may not expose serial via SNMP. 2. Device is asleep or low-power mode limits SNMP response. 3. DCA scan profile does not request specific OIDs. 4. Perform manual SNMP walk to validate available fields.
+How do I troubleshoot Central web portal access errors?,1. Confirm IIS is running. 2. Verify Application Pools are started. 3. Ensure SSL certificate is still valid if HTTPS is used. 4. Check Windows Firewall inbound rules for port 443 or 80.
+How do I find DCA WebSocket handshake failures?,1. Open dca.log and search for 'WebSocket' entries. 2. Identify if fallback to Long Polling occurred. 3. Review intermediate firewall logs if ports 443 or WebSocket upgrades are blocked.
+How can I tell if a DCA is stuck in old device data?,"1. Check the last scan time for devices. 2. If timestamps are >1 week old, the DCA may be stalled. 3. Force a resync or reinstall DCA if needed."
+What should I review before moving a Printanista Hub server?,1. Backup SQL database. 2. Export IIS settings. 3. Record licensing keys and Hub Admin settings. 4. Verify DNS and firewall updates after migration.
+What causes inconsistent supply level reporting?,1. Supplies MIB OIDs may vary by firmware revision. 2. Printer may round values differently when low. 3. SNMP responses could timeout. 4. Validate OIDs with SNMP walk and customize scan profile if necessary.
+How do I fix a 'certificate validation failed' error on DCA?,1. Ensure Windows Certificate Store is updated. 2. Synchronize system time. 3. Verify proxy or firewall isn’t altering SSL/TLS inspection.
+How can I optimize DCA performance for 1000+ printers?,1. Reduce scan concurrency slightly (80–100 max). 2. Schedule scans at off-peak network times. 3. Increase SNMP timeout slightly. 4. Split ranges into subnet-specific blocks.
+What is the fallback behavior if Printanista Hub can't validate a license immediately?,Hub will continue operating in limited mode but will flag 'Not Licensed' warnings until a valid license string is entered.
+What should I do if Central’s SQL database goes into suspect mode?,1. Check SQL error logs for corruption. 2. Attempt DBCC CHECKDB repairs. 3. Restore from last good backup if needed. 4. Notify users before attempting database detach/reattach.
+How do I troubleshoot when a DCA update fails?,1. Look for AutoUpdate errors in dca.log. 2. Confirm access to https://updates.printfleetcdn.com. 3. Verify TLS settings allow HTTPS communication. 4. Manual reinstall may be required if corrupted.
+What signs indicate a firewall is blocking Printanista traffic?,1. DCA logs show repeated ping or registration failures. 2. Hub shows DCA offline despite local scans working. 3. Manual curl/wget tests to registration server fail.
+What is the impact if printers change SNMP community strings?,1. DCA will fail to authenticate SNMP scans. 2. Devices may show stale or no updates. 3. Errors will appear in scan logs as SNMP failures.
+How can I safely restart Central and Printanista without data loss?,1. Stop IIS services. 2. Pause scheduled tasks (if any). 3. Confirm no active Hub syncs. 4. Restart SQL services cleanly. 5. Restart IIS Application Pools.
+What is the best way to isolate SNMP issues to specific VLANs?,1. Assign separate DCA instances per VLAN if possible. 2. Scan each VLAN separately. 3. Monitor success/failure rates per subnet. 4. Look for asymmetric routing or firewall issues.
+How can I tell if a DCA Edge ID is duplicated across environments?,1. Check Admin > DCA Management in Printanista. 2. Search for duplicate Edge IDs assigned to different customer accounts. 3. Remove duplicates manually if needed.
+How do I fix devices showing 0 pages printed?,1. Validate correct OIDs in the scan profile. 2. Confirm the printer supports PageCounter OIDs. 3. Update printer firmware if SNMP support is limited. 4. Force a manual SNMP walk to validate live meters.
+What’s the correct escalation path for major Printanista sync failures?,1. Gather Hub and DCA logs. 2. Screenshot errors. 3. Confirm licensing status. 4. Submit case to ECI Support with priority marking if sync failure affects multiple customers.
+What should I do if HTTPS binding is missing in IIS for Printanista?,1. Open IIS Manager. 2. Go to Bindings > Add > Select https and assign certificate. 3. Restart IIS site. 4. Confirm HTTPS access to Hub.
+What are recommended timeout settings for SNMP in large networks?,Timeout: 10000 ms. Retries: 2. Max concurrency: 80–100 depending on network health.
+What should I verify if meter exports are incomplete in Printanista?,1. Confirm device discovery is complete. 2. Ensure correct device types are included in report filters. 3. Double-check Hub report generation settings.
+How do I troubleshoot 'DisconnectedDeviceGracePeriod' misbehavior?,1. Review DCA config to ensure grace period is set properly. 2. Check if device is still pingable via ICMP/SNMP during offline window.
+What could cause WebAudit or Viewer USB scans to fail?,1. USB printer SNMP response not captured. 2. Incorrect USB polling intervals. 3. Permissions issues on the Viewer host.
+How can I confirm database permissions needed for Printanista Hub?,1. SQL login must have db_owner or sufficient SELECT/UPDATE/INSERT on Hub DB. 2. Hub services use connection strings stored in appsettings.json or IIS config.
+What settings should I validate if RDL isn't connecting to a device?,1. Confirm remote SNMP is enabled. 2. Ensure HTTPS access from Hub server to printer. 3. Confirm no client firewalls block WebAudit port.
+What steps help diagnose excessive DCA CPU usage?,1. Check scan frequency settings. 2. Monitor device scan logs for stuck SNMP loops. 3. Reduce scan concurrency. 4. Review Windows Task Manager during peak scan periods.
+What are signs that Printanista Hub lost SQL connectivity?,1. Login page shows 'Database connection failed'. 2. IIS logs reveal SQL connection timeout. 3. No device updates despite healthy DCA connections.
+How should I tune scan profiles for remote or satellite offices?,1. Increase SNMP timeout. 2. Reduce scan frequency. 3. Narrow IP ranges tightly. 4. Consider deploying a localized DCA onsite.
+How can I identify SSL inspection affecting DCA traffic?,1. Curl or browser access to reg.pf-d.ca shows invalid certificates. 2. DCA logs SSL/TLS handshake failures. 3. Bypass SSL inspection for specific URLs.
+Where do I manually trigger DCA device rediscovery?,Local DCA web interface > Devices tab > Force Rescan or restart the DCA service.
+What should I review if device supply alerts never trigger?,1. Confirm alert thresholds are enabled. 2. Ensure supply monitoring is active in scan profiles. 3. Validate SNMP MIB data is available during scans.
+What causes devices to flip between Online/Offline in Printanista?,1. Short SNMP timeouts. 2. Network latency causing intermittent scan failures. 3. Printer sleep modes impacting response.
+What best practices ensure clean DCA upgrades?,1. Backup config and logs. 2. Review release notes for breaking changes. 3. Validate Edge ID after update. 4. Test scans immediately after upgrade.
+What does a repeated 'Ping Timeout' during SNMP scans indicate?,1. Printer unreachable on network. 2. ICMP blocked. 3. Device asleep. 4. SNMP disabled or misconfigured.
+What does the error 'RegistrationServer unreachable' mean for DCA?,The DCA cannot reach reg.pf-d.ca for license and Edge ID validation — check internet access and firewall rules.
+How do I confirm all Windows services needed by Printanista are running?,"IIS, SQL Server, and Central/Hub Application Pools must all be active without stopped states."
+How can I check if DNS misrouting is causing DCA failures?,1. Ping reg.pf-d.ca and meters.mydoceo.com. 2. Compare expected IPs. 3. Use nslookup from server.
+What should I do if a scheduled Printanista report isn’t delivered?,1. Check SMTP server settings. 2. Validate report scheduling times. 3. Review SMTP logs for bounce or send errors.
+How do I identify if a firewall is performing deep packet inspection on SNMP traffic?,1. Use Wireshark to capture SNMP requests/responses. 2. Look for missing or malformed SNMP responses. 3. Disable DPI temporarily to confirm behavior change.
+What steps should be taken if all SNMP scans fail after a network change?,1. Verify IP ranges and VLAN routes. 2. Confirm SNMP community strings didn’t change. 3. Validate firewall ACLs allow UDP 161. 4. Perform manual SNMP walk tests.
+What can cause a DCA to crash unexpectedly?,1. Corrupted config file. 2. Insufficient system RAM. 3. Third-party antivirus tampering with processes. 4. Uncaught SNMP exception from misbehaving devices.
+What causes meter values to reset or disappear?,1. Device firmware resets meters improperly. 2. SNMP values unavailable at scan time. 3. Wrong device OID mapping in scan profile.
+How do I validate DNS servers are accessible for DCA registration?,1. Check DCA logs for DNS server listings. 2. Ping each listed server. 3. Validate outbound port 53 access if needed.
+What triggers a forced fallback to Long Polling in DCA?,1. WebSocket upgrade fails (HTTP 400/403). 2. SSL negotiation fails. 3. Firewall or proxy blocks WebSocket frames.
+What should I monitor post-upgrade to confirm Printanista health?,1. SQL Server uptime. 2. IIS site response time. 3. License validity. 4. Recent device data flow in Admin > DCA Management.
+What does a blank Public Key field in Hub Admin mean?,1. License service not initialized. 2. SQL connection failure. 3. Corrupted licensing table in database.
+Where does the DCA store cached scan results before upload?,In RAM during active scan sessions; not persisted unless logs are enabled.
+What behavior indicates device attributes are mismapped?,1. Printer model appears as 'unknown' or wrong brand. 2. Supplies not mapped correctly. 3. Manual SNMP walk reveals missing expected OIDs.
+What are common causes of supply alerts not triggering?,1. Incorrect threshold configuration. 2. Device not reporting supplies via SNMP. 3. SNMP response timing out before capture.
+How do I capture full HTTP traffic between DCA and Hub for analysis?,"Use Fiddler, Wireshark, or tcpdump to capture port 443 traffic during registration and sync events."
+What steps should I take before manually editing dca.config?,1. Backup original config. 2. Validate JSON syntax after edits. 3. Restart DCA service cleanly.
+What does the DCA setting 'SnmpMaxConcurrent' control?,The maximum number of simultaneous SNMP requests allowed at a time during scans.
+How do I fix a mismatch between Printanista Hub and Central sync states?,1. Resync manually via Admin > Syncs > Force Sync. 2. Restart Hub services. 3. Validate SQL database is intact and current.
+What should I do if HTTPS certificate for Hub expired?,1. Renew or reissue SSL certificate. 2. Bind new certificate in IIS Manager. 3. Restart IIS and validate HTTPS connections.
+What causes a DCA to repeatedly lose connection every 45 seconds?,1. Idle timeout on firewall session. 2. DNS resolution failures mid-session. 3. SSL session expiration due to proxy inspection.
+What firewall rule must always be allowed for DCA operation?,Outbound TCP 443 to *.mydoceo.com and *.printfleetcdn.com.
+What is the risk if DCA auto-update fails repeatedly?,"DCA will eventually become version-locked, miss security patches, and compatibility issues will occur with Hub updates."
+How should SNMP retries and timeouts be tuned for satellite offices?,"Increase timeout (e.g., 15000 ms) and reduce retries (1–2 max) to avoid network congestion."
+What should I capture when troubleshooting a stuck DCA 'Checking for Updates' status?,1. dca.log full export. 2. Windows Event Viewer application logs. 3. Screenshot of DCA local UI status page.
+How can I confirm HTTPS fallback behavior manually?,1. Use browser DevTools (Network tab). 2. Connect to Hub and observe if WebSocket upgrades succeed or fallback occurs.
+What can cause Printanista WebAudit sessions to timeout mid-scan?,1. Firewall idle session timeout. 2. Printer dropping SNMP responses. 3. Poor local network conditions between WebAudit agent and printer.
+What SQL server setting is critical for Printanista Hub?,SQL Server must have TCP/IP protocol enabled and set to dynamic or static port that matches Hub configuration.
+What is the maximum recommended scan concurrency for a server with 4GB RAM?,Limit to 50–60 concurrent SNMP sessions to avoid memory exhaustion.
+How can I distinguish device authentication issues vs SNMP scanning failures?,"Authentication issues log 'auth failure' or 'invalid community', while general SNMP failures show 'timeout' or 'NoSuchName' errors."
+Where can I find the ECI fallback DNS server IP addresses?,Embedded in DCA logs; fallback IPs often start with 18.221.x.x or 18.194.x.x (AWS public IP ranges).
+What could cause immediate failure of licensing sync post-upgrade?,1. Hub lost SQL connection. 2. Old licensing table schema incompatible. 3. IIS app settings pointing to wrong environment.
+What tools can help simulate SNMP traffic during troubleshooting?,"Paessler SNMP Tester, Net-SNMP walk tools, or built-in DCA local SNMP test tools."
+What should I validate if supply yield percentages seem incorrect?,1. Confirm printer firmware is current. 2. Walk supplies MIB manually. 3. Review device model OIDs for printer-specific quirks.
+What ports must be open for WebAudit remote link features?,"HTTPS (TCP 443) outbound must be open between Hub, Viewer USB agents, and devices."
+What is the recommended action if duplicate devices persist despite proper SNMP?,Contact ECI support to perform database-level deduplication if manual cleanup fails.
+How can I ensure DCA updates without needing full admin rights?,1. Pre-schedule update checks under service account context. 2. Validate NT AUTHORITY\SYSTEM has internet access permissions.
+What happens if print spooler service crashes on a Hub server?,"Remote Device Link (RDL) and some direct device jobs will fail, but Hub’s core device sync and licensing will continue operating."
+Why might TLS negotiation errors spike during SNMP scanning?,TLS errors only affect HTTPS operations; SNMP over UDP is not secured by TLS. Likely a concurrent network issue affecting multiple protocols.
+How do I distinguish critical vs non-critical DCA log warnings?,"Critical errors interrupt registration, scanning, or uploads; non-critical warnings often relate to single device anomalies."
+What causes WebSocket closure codes like 1006 in DCA logs?,"Unexpected connection closure usually caused by proxy resets, deep packet inspection drops, or firewall session timeouts."
+What does 'device orphaned' mean in Printanista reporting?,"A device was previously matched but no active DCA reports it anymore, often due to DCA removal without reassignment."
+What causes SNMP v2c fallbacks to v1 unexpectedly?,"Device fails v2c handshake (wrong community, version mismatch), triggering automatic fallback in scan logic."
+What is the impact of missing Printer MIB support on discovered devices?,"Printanista may capture IP and hostname, but not meters, supply levels, or model/serial info."
+What tools help analyze HTTPS handshake failures from DCA?,"Wireshark (filter SSL/TLS records), curl with verbose output, or ECI internal Hub debug tools."
+What does the error 'No route to host' indicate during SNMP scan?,"The target device is unreachable at IP level — likely network routing, firewall, or VPN misconfiguration."
+What should I check if all SNMP scans return identical model names?,1. Printer SNMP implementation may default to generic responses. 2. Verify OID mappings. 3. Perform an SNMP walk to validate responses for sysDescr and prtGeneralPrinterName.
+How do I troubleshoot a DCA that won't auto-update?,1. Check DCA logs for AutoUpdate failures. 2. Confirm access to https://updates.printfleetcdn.com. 3. Verify system clock and Windows Update service are healthy. 4. Manually install the latest DCA if necessary.
+Why are supply thresholds not applying to new discovered devices?,1. Check if new devices are assigned to groups with inherited thresholds. 2. Review supply profile settings in Hub. 3. Confirm SNMP supplies are available during device discovery.
+What can cause a Hub migration to fail during backup restoration?,1. Incorrect SQL database version. 2. Incomplete backup set. 3. Missing IIS application bindings. 4. Old web.config or appsettings.json referencing incorrect DB names.
+How do I resolve frequent 'Ping Timeout' errors on devices known to be online?,1. Confirm ICMP is allowed on devices. 2. Validate VLAN routing and firewall ACLs. 3. Monitor SNMP vs Ping behavior separately.
+What triggers a Printanista DCA to re-register automatically?,1. Major network interface change. 2. Server hostname changes. 3. Manual deletion of Edge ID from DCA config.
+What should I collect for a Central server performance issue investigation?,1. IIS logs. 2. SQL Server slow query logs. 3. Central application logs. 4. Windows Event Viewer errors.
+What common mistakes cause API sync failures with eAuto?,1. Expired or missing Web Service Token. 2. Incorrect Printanista URL endpoint. 3. Incorrect eAuto server-side firewall rules.
+What could cause Printanista to show a device in 'Pending Removal' indefinitely?,1. Device still reporting in from stale DCA. 2. Hub hasn't completed cleanup cycle. 3. Database deadlock preventing update.
+How do I confirm ECI Update Servers are accessible from a customer environment?,1. Ping updates.printfleetcdn.com. 2. Perform HTTPS curl request. 3. Review firewall outbound rules for TCP 443.
+What is a sign that proxy authentication is interfering with DCA communications?,1. DCA logs show 407 Proxy Authentication Required. 2. Hub connection shows frequent disconnects. 3. SNMP scans complete but uploads fail.
+How do I collect full HTTP request/response pairs from a DCA?,1. Enable debug mode. 2. Use a local Fiddler proxy or Wireshark. 3. Capture during a registration or sync event.
+What would cause a DCA Edge ID collision?,1. Cloned VM without sysprep. 2. Manual copy of DCA config between machines. 3. Misconfigured deployments across multiple customer tenants.
+Why might SSL handshakes succeed but WebSocket upgrades fail?,1. Intermediate firewall alters header frames. 2. Proxy strips WebSocket upgrade requests. 3. IIS misconfiguration at server level.
+What could cause missing meter reads specifically for color counts?,1. Device firmware does not expose color page counters separately. 2. Incorrect SNMP OIDs assigned to scan profile. 3. Printer reports all pages under monochrome.
+What should I review if devices discovered by IP never get full model/serial info?,"1. Printer SNMP settings. 2. MIB support for sysDescr, sysObjectID. 3. Enable extended discovery in DCA scan profile."
+What can cause constant offline/online flipping for stable printers?,1. Printer sleep modes impacting ICMP responses. 2. Low SNMP timeout thresholds. 3. Network congestion or intermittent routing failures.
+What is a safe sequence for upgrading DCA versions on high-traffic sites?,1. Pause scanning. 2. Backup logs/config. 3. Install latest version. 4. Validate Edge ID continuity. 5. Resume scanning.
+What indicates a mismatch between Central and Printanista scan definitions?,1. Devices discovered in Central show missing attributes in Hub. 2. SNMP scans complete but supplies missing. 3. Version mismatch in scan profile schema.
+How should I monitor scheduled reports for failure trends?,1. Export scheduling logs if available. 2. Track delivery failure rates. 3. Alert if >5% of scheduled reports fail consecutively.
+What could cause a blank licensing screen after a Printanista upgrade?,1. IIS binding misconfiguration. 2. SQL database not fully upgraded. 3. Web.config pointing to old licensing table.
+How do I reset a stuck DCA that fails to clear outdated scan ranges?,1. Backup config. 2. Wipe dca.config file and re-register. 3. Rebuild scan profiles manually.
+What happens if I delete an Edge ID directly in the Hub portal?,1. Devices reported by that DCA will orphan until another DCA matches them. 2. Historical scan logs remain but future scans stop.
+What is the fallback method if licensing sync with GTTechOnline is unavailable?,Manually email support@ecisolutions.com with the Hub Public Key and request a license generation.
+How do I recognize TLS downgrade attacks affecting Printanista?,1. Unexpected SSL protocol version changes in Wireshark. 2. Handshake failures. 3. Browser security alerts.
+What causes supply level fluctuations without actual usage?,1. Printer reporting artifacts. 2. SNMP supply OIDs inaccurately mapped. 3. Printer firmware rounding errors.
+What steps confirm a successful Printanista migration to a new server?,1. IIS bindings correct. 2. SQL database online. 3. New licensing string pasted. 4. DCA syncs confirmed healthy.
+Why might some DCAs stop reporting after a Printanista major version upgrade?,1. DCA version incompatible with Hub. 2. Registration token expired. 3. Transport protocols mismatched (WebSocket/Long Polling fallback failure).
+What can cause duplicate WebSocket connections from a DCA?,1. Service restarted without clean disconnect. 2. Failover network causing session duplication. 3. Hub retry policies stacking idle sessions.
+What security settings should be confirmed post-Hub deployment?,1. HTTPS enforced. 2. SQL password complexity. 3. Minimum TLS 1.2 enabled. 4. SMTP authentication secured if used.
+What might cause 'device orphaned' reports to spike after DCA decommissions?,1. No immediate replacement DCA registered. 2. Orphan timeout window extended in Admin settings. 3. Devices lost in incorrect customer tenancy.
+What does 'ProcessedValueChanged' spam in logs typically mean?,High frequency meter or supply updates are being reported; often normal unless excessive and impacting performance.
+What are signs of database connection pooling issues in Central?,1. Long login delays. 2. SQL deadlock errors. 3. Connection timeout errors in IIS.
+What should I validate if printer firmware updates break SNMP scans?,1. Confirm MIB OID structure changes. 2. Validate new SNMP walk outputs. 3. Update scan profiles if needed.
+What triggers an Edge ID to reset unexpectedly?,1. Reinstallation of DCA without retaining config. 2. Changing Windows machine SID. 3. Hard wiping registration keys manually.
+What fallback behavior occurs if registration fails mid-scan?,Device scan results are cached temporarily and retried after next successful Hub connection.
+What should I collect if supply alerts suddenly fail across all devices?,1. Latest Hub version. 2. Alert engine logs. 3. Full DCA logs. 4. SMTP test confirmations.
+How can I ensure third-party security compliance for Printanista deployments?,1. TLS 1.2 only communication. 2. HTTPS enforced for all endpoints. 3. Periodic credential rotation if applicable.
+What are signs that an SNMP scanning storm is overloading the network?,1. Network latency spikes during scheduled scans. 2. Printers dropping SNMP responses randomly. 3. Firewalls logging UDP flood warnings.
+What causes SNMP fallback retries to increase abnormally?,1. Devices in power-save modes. 2. Excessive retries configured. 3. Device firmware misbehaving under SNMP load.
+What distinguishes a scan timeout vs scan error in DCA logs?,Timeouts mean no device response in window; errors mean device responded but with invalid or unexpected data.
+What is the normal cause for Hub Admin login issues after SQL server change?,Connection strings still pointing to old SQL hostname/IP.
+What should I validate if a device shows MAC address as 00:00:00:00:00:00?,"1. Printer SNMP agent may not expose MAC addresses properly. 2. Device is behind a proxy, NAT, or firewall that masks MACs. 3. Use ARP cache on local DCA host to verify mapping if needed."
+What causes HTTP 502 or 504 errors when accessing Printanista Hub?,1. IIS Application Pool crash. 2. SQL database offline or slow. 3. Incorrect bindings after server migration.
+What triggers a DCA to stop scanning devices even though it remains connected?,1. Scan schedules disabled or corrupted. 2. Insufficient available system RAM. 3. Internal SNMP thread crash without full service restart.
+What can cause device supply status to show 'Unknown' suddenly?,1. SNMP supplies MIB walk failed. 2. Printer firmware update altered OID structure. 3. SNMPv3 mismatch if device was reconfigured.
+How do I confirm if a DCA is stuck in a retry loop?,1. Look for repeated log lines such as 'Retrying in 15s' or 'Reattempting Hub connection'. 2. Service uptime exceeding normal cycles without successful resync.
+"What causes device attribute corruption (model, serial mismatch)?",1. IP address re-use among different printers. 2. Missing MAC address validation. 3. DCA scanning outdated ARP cache or stale DNS records.
+What is the cleanest method to reassign a DCA to a different customer tenant?,1. Deactivate Edge ID under old customer. 2. Wipe and reinstall DCA with new customer registration string. 3. Validate new registration sync.
+What causes FMAudit Central jobs to stall in Pending state?,"1. Central service background thread crash. 2. SQL Server deadlock. 3. Invalid job scheduling parameters (bad ranges, bad filters)."
+What firewall issues cause WebAudit sessions to break mid-discovery?,1. Stateful inspection timeouts. 2. DPI (Deep Packet Inspection) altering SSL traffic. 3. SSL/TLS certificate pinning blocks session mid-stream.
+How do I safely tune down SNMP concurrency in a large customer deployment?,"1. Edit dca.config 'SnmpMaxConcurrent' to a lower value (e.g., 50). 2. Restart DCA service. 3. Monitor CPU and RAM usage post-change."
+What causes SNMP scan intervals to spike unpredictably?,1. Printer firmware bugs causing intermittent SNMP failures. 2. Network congestion. 3. Windows system resource contention at DCA host level.
+What should I do if a Printanista site fails GDPR audit?,1. Validate SSL enforcement. 2. Confirm device-level anonymization settings. 3. Rotate or regenerate access tokens for APIs.
+What error messages indicate Printanista lost database access after upgrade?,1. 'Unable to connect to DB'. 2. 'Database unavailable' in IIS logs. 3. SQL connection refused at network layer.
+What can cause RDL direct print jobs to fail silently?,1. Print spooler crash. 2. Missing user authentication at printer side. 3. Invalid certificate trust chain blocking job submit.
+What triggers Central to enter license enforcement mode unexpectedly?,1. Licensing service handshake failure. 2. Expired Viewer licenses. 3. Mismatch in customer ID between database and license key.
+What do recurring 'Authorization error' logs typically indicate?,1. Incorrect authentication token. 2. API endpoint changes unhandled. 3. Stale session cookies during service handoff.
+What could cause a printer to appear 'online' but fail all SNMP queries?,1. Firewall blocks UDP 161 responses. 2. Printer SNMP service disabled separately from TCP/IP stack. 3. Firmware crash at management agent level.
+How can I validate Windows Server firewall isn't silently blocking DCA operations?,1. Disable Windows Firewall temporarily for test. 2. Create inbound/outbound rules explicitly for DCA executable and service ports.
+Where does Hub store temporary logs for API errors?,Logs usually stored under C:\\inetpub\\wwwroot\\Printanista\\Logs (or corresponding custom IIS paths if reconfigured).
+How do I recognize when SQL Server resource starvation is affecting Hub performance?,1. Long query execution times. 2. Session blocking or locking warnings. 3. Deadlocks appearing in SQL trace logs.
+What would cause Printanista report PDFs to generate corrupt or blank files?,1. IIS application pool recycling mid-export. 2. SQL query timeout during report generation. 3. Missing report template dependency files.
+What causes licensing status to 'flip' from Licensed to Not Licensed during upgrades?,1. Web.config licensing module mismatch. 2. App pool identity lacks permission to load licensing table. 3. SQL schema upgrade failures.
+What can cause slow device removal even after a DCA is decommissioned?,1. Orphaning protection period set too long (default 30–90 days). 2. Hub cleanup tasks not scheduled properly. 3. SQL maintenance jobs disabled.
+What are indicators that Active Directory authentication is interfering with Hub?,1. Inconsistent login failures. 2. 401 Unauthorized errors on certain users. 3. Kerberos delegation or SPN configuration issues.
+What causes SMTP relay errors even if basic connectivity exists?,1. Mail server requires SMTP AUTH (username/password). 2. TLS mandatory but not negotiated. 3. Firewall IDS blocking EHLO sequence.
+What can cause WebAudit to succeed but show 'zero devices found'?,1. Wrong discovery OID range specified. 2. Printer SNMP agent sleep state. 3. SSL session timeout before scan completion.
+What causes DCA HTTPS requests to hang indefinitely?,1. TLS renegotiation failures mid-session. 2. SSL inspection proxies pausing data transfer. 3. Server-side idle timeouts exceeding client expectation.
+What would cause duplicate license alerts post Printanista migration?,1. Old Hub instance accidentally brought online. 2. Duplicate public key reuse during activation. 3. SQL replication lag between nodes.
+How do I confirm DCA clock drift isn't impacting SSL connections?,1. Compare server NTP sync status. 2. Look for SSL handshake error timestamps mismatched by >5 minutes. 3. Use w32tm command-line tool.
+What triggers DNS failures to appear in DCA logs even if other traffic works?,1. Primary DNS server partially down. 2. DNS cache corruption on host server. 3. DNS port 53 UDP blocked intermittently by edge firewalls.
+What can cause massive HTTP 400/403 errors during DCA syncs?,1. Proxy stripping HTTP headers. 2. Load balancers misconfigured with incorrect upstream settings. 3. SSL inspection inserting invalid certificates.
+What are signs that SQL tempdb issues are throttling Printanista performance?,1. Excessive autogrowth events logged. 2. Long-running queries involving temp tables. 3. Report generation stalls.
+What causes IIS worker process crashes impacting Printanista portal?,1. Unhandled exceptions in .NET application. 2. Memory limit exceeded. 3. Failed module initialization during IIS startup.
+What are signs that printer firmware regression broke SNMP discovery?,1. Models returning as 'unknown' post-upgrade. 2. Supply MIBs returning invalid or empty fields. 3. Monochrome page counts misreporting after firmware flash.
+What should I do if Printanista supply reporting seems 24–48 hours stale?,1. Confirm DCA scan schedule. 2. Review Hub sync intervals. 3. Manually force a DCA rescan and watch for supply updates.
+What indicates an improperly matched printer in device lists?,1. Correct IP but wrong model/serial data. 2. MAC address mismatch. 3. Supply levels absent despite device online status.
+What might cause huge spikes in SNMP retries per scan cycle?,1. Devices entering sleep or eco-mode unpredictably. 2. VPN packet loss. 3. Temporary SNMP community string changes.
+What are key signs that RDL is operating over a congested link?,1. WebAudit sessions timeout prematurely. 2. PDF job renders incomplete or corrupt. 3. SNMP walks show partial device trees.
+What are signs of TLS session renegotiation issues from DCA to Hub?,1. Connection resets after 1–2 minutes. 2. DCA retries connection despite initial handshake success. 3. Hub logs show mid-session SSL failures.
+What critical settings must be validated post-DCA mass deployment?,1. Correct scan ranges per DCA. 2. Licensing status confirmed per Edge ID. 3. Health check heartbeat interval logs clean.
+What indicates supply prediction algorithms malfunctioning post-upgrade?,1. Projected supply depletion dates disappear. 2. Supply graphs show no movement. 3. SNMP OIDs return cached not live values.
+What causes DCA service to auto-stop without crashing?,1. Windows Service Recovery Policy set incorrectly. 2. System resource exhaustion triggers service halt. 3. Unhandled retry flood conditions.
+What symptoms show that proxy SSL inspection breaks WebSocket sessions?,"1. Initial HTTPS connects, but WebSocket upgrade fails. 2. Logs show Error 1006 WebSocket close codes. 3. Session drops exactly after TLS handshake renegotiation."
+What causes DCA to repeatedly fallback from WebSocket to Long Polling?,1. Firewall strips WebSocket headers. 2. Intermediate proxy modifies SSL handshake. 3. Load balancer terminates WebSocket prematurely.
+How do I confirm whether a DCA is using Long Polling or WebSocket?,1. Open dca.log and search for 'Connected using WebSocket' or 'Fallback to Long Polling'. 2. Look at initial Hub handshake entries.
+What should I check if SNMP supply levels show '0%' across multiple printers?,1. Device firmware may have corrupted supply MIBs. 2. SNMP read timeout occurs before response received. 3. Incorrect scan profile mappings post firmware upgrade.
+How do I identify print jobs stuck in RDL queues?,1. Review Hub RDL job queues under Admin > Remote Device Link. 2. Cross-reference failed job IDs with IIS logs. 3. Inspect Windows Print Spooler service logs if applicable.
+What triggers multiple identical devices showing up in Hub after migration?,1. DCA reinstalled without retaining previous Edge ID. 2. Duplicate scan ranges configured accidentally. 3. Old Edge ID not deactivated.
+How do I know if SNMP timeout thresholds are too aggressive?,1. Repeated 'SNMP Timeout' entries for otherwise reachable printers. 2. Devices intermittently online/offline. 3. Large delta between ICMP ping success and SNMP success.
+What are early warning signs of SQL Server stress impacting Central?,1. IIS login failures. 2. Report generation hangs. 3. Deadlocks detected in SQL Profiler.
+What can cause SSL certificate errors even if the cert is valid?,1. Intermediate certificates missing. 2. Incorrect server hostname in SSL cert CN field. 3. Client-side SSL libraries outdated or mismatched.
+What do recurring 'TLS handshake renegotiation error' entries indicate?,1. Proxy server altering SSL packets mid-session. 2. Firewall session timeouts not tuned for persistent HTTPS sessions. 3. Client clock drift vs server time.
+What must be validated when migrating Printanista Hub to a new SQL Server?,1. New SQL server hostname updated in web.config and/or appsettings.json. 2. SQL user permissions replicated correctly. 3. Linked servers (if used) reconfigured.
+What can cause DCA heartbeat intervals to drift inconsistently?,1. SNMP scan concurrency spikes delaying heartbeat send. 2. Hub connectivity interruptions. 3. Windows Service Manager delays due to system resource constraints.
+What indicates bad firmware post-upgrade for supported printers?,1. Missing serial numbers on discovery. 2. 'Unknown device model' populating even after successful scan. 3. Supplies walk fails at initial MIB branch.
+What causes devices to fail supply prediction modeling after appearing healthy?,"1. Supply OID responses missing critical date fields. 2. Intermittent MIB corruption during SNMP walks. 3. Supplies levels reported only at boot, not dynamically."
+What should I collect for escalation if devices are mismatched by Printanista?,1. Full dca.log with SNMP debug enabled. 2. Manual SNMP walk output of impacted device. 3. Screenshots from device Web UI showing model/serial.
+What are signs that IIS worker thread starvation is happening?,1. Slow site load times. 2. High CPU usage with low active connection count. 3. Frequent 503 errors without visible crashes.
+What causes SNMP community strings to 'forget' across different ranges?,1. Scan profile configuration mismatch. 2. DCA upgrade overwriting custom settings. 3. Config JSON file corruption.
+How do I manually verify an OID is correct for a problematic printer?,1. Use SNMP walk tool directly to device. 2. Locate MIB subtree for targeted metric. 3. Validate expected vs returned value matches Printanista expectations.
+What triggers high device orphan rates post-migration to new DCAs?,1. Old DCA not deactivated cleanly. 2. Scan ranges overlapped incorrectly. 3. Licensing sync delay causing interim orphan flags.
+What are causes of database deadlocks during heavy report generation?,1. Poor query index optimization. 2. Insufficient SQL tempdb sizing. 3. Report export pulling massive device datasets simultaneously.
+How can I determine if a supply alert is truly actionable?,1. Review historic supply depletion trends. 2. Confirm no random supply spikes in last 24h. 3. Validate against device supply % thresholds configured.
+What security risks arise if HTTPS is not enforced on Printanista Hub?,1. Data in transit could be intercepted. 2. Admin credentials could be stolen. 3. License activation traffic could be hijacked.
+What is a strong first test for verifying SSL cert installation on a Hub server?,1. Access https://<hubURL> and confirm valid lock icon. 2. Run SSL Labs server test. 3. Confirm certificate chain is complete without weak ciphers.
+What should be my first check if a DCA won't auto-update after months of successful updates?,1. Verify auto-update channel settings in dca.config. 2. Confirm update server URLs are reachable (updates.printfleetcdn.com). 3. Review disk space availability on the DCA host.
+What early warning signs show Hub SQL database corruption?,1. Failed login attempts despite correct credentials. 2. Sudden device count drops or spikes. 3. Report exports fail with SQL exceptions.
+What can cause SNMPv2c queries to fallback to SNMPv1 even if device supports v2c?,1. Device SNMP agent misconfigured. 2. Firewall rewriting SNMP packets improperly. 3. Outdated DCA scan profile forcing fallback.
+What indicates DCA license validation was skipped on startup?,1. No 'License validation successful' entry within first 100 lines of log. 2. Hub shows 'Not Licensed' for that Edge ID. 3. Device data uploads throttled.
+What can cause meter reads to lag even if device discovery is fast?,1. Meter OIDs are scanned separately at longer intervals. 2. Printer firmware delays SNMP responses. 3. Scan concurrency settings prioritize discovery over meter pulls.
+What can cause SNMP scan results to suddenly show incorrect serial numbers?,1. Device firmware was upgraded and altered SNMP response structure. 2. Incorrect fallback OID mappings used. 3. Device SNMP service corrupted mid-session.
+What are signs a DCA auto-update partially failed?,1. DCA service starts but logs show mismatched version identifiers. 2. Update attempts repeat indefinitely in logs. 3. Manual access to the web UI shows outdated version info.
+What causes supply percentage graphs to flatline for multiple devices?,1. Supplies OIDs no longer returning live values. 2. SNMP walk shows static cached data from device. 3. Scan profile missing new supply definitions post-firmware upgrade.
+What should I do if a Printanista scheduled report exports only partial data?,1. Check report filters and device selection rules. 2. Validate no SQL timeout errors during report generation. 3. Ensure IIS app pool timeout settings are tuned appropriately.
+What indicates proxy server SSL inspection is tampering with DCA sync?,1. TLS handshake succeeds but WebSocket fails immediately. 2. Curl output shows invalid intermediate certificates. 3. Hub logs show repeated mid-session disconnects.
+What signs show SQL Server tempdb issues are throttling Printanista?,1. Report queries stall indefinitely. 2. Hub device search runs extremely slow. 3. SQL tempdb autogrowth events logged repeatedly.
+What causes sudden spikes in device discovery times for DCAs?,1. Unexpected subnet expansion. 2. Scan concurrency overloaded due to default settings. 3. Printer SNMP slowdowns or eco mode.
+What causes SMTP alerts from Hub to queue but never send?,1. SMTP server authentication failure. 2. Email server requires TLS but Hub is configured for plaintext. 3. SMTP relay restricted by firewall policies.
+What should I check if Central license enforcement triggers unexpectedly?,1. Review Central XML and licensing table entries. 2. Confirm latest license was pasted correctly. 3. Inspect service startup order (Central before WebAudit).
+What can cause a DCA upgrade to corrupt Edge ID tracking?,1. Improper uninstall of prior version without config retention. 2. Windows SID duplication between virtual hosts. 3. Manual registry edits during upgrade.
+What are signs that WebAudit discovery scan settings are misconfigured?,1. Only partial IP ranges are scanned. 2. Device types like MFPs or plotters missing from reports. 3. SNMP walk results differ heavily between WebAudit and DCA.
+What causes frequent SQL 'deadlock victim' errors in Printanista reporting?,1. Heavy concurrent report generation. 2. Poor index usage on device tables. 3. Inadequate SQL tempdb size or improper isolation levels.
+What triggers devices to appear as 'ghost devices' in Printanista?,1. Device IP changed without MAC or serial match to prior record. 2. Scan profiles mismatched community strings. 3. DCA scan scheduling conflicts across multiple DCAs.
+What can cause DCA transport logs to grow excessively large?,1. Debug mode enabled permanently. 2. Persistent retries due to intermittent network failures. 3. AutoUpdate module logging failed attempts every few minutes.
+What are signs an SNMP MIB is unsupported despite successful walk?,1. Values returned are zero or default across key branches. 2. Supply OIDs exist but supply level always shows 100%. 3. OID data structure mismatched against standard RFCs.
+What causes SNMP fallback to occur even when correct community strings are configured?,1. Firewall drops larger SNMP v2c packets causing v1 fallback. 2. Device firmware restricts SNMP access after idle period. 3. DCA retry thresholds exceeded on first pass.
+What can cause a DCA to register successfully but fail at first heartbeat?,1. Firewall session timeout before initial hub sync. 2. Edge ID mismatch due to prior DCA reinstall. 3. Hub server-side session table misalignment.
+What should I monitor immediately post-Printanista upgrade?,1. Successful admin login. 2. Report generation success. 3. DCA Edge ID connectivity per customer.
+What causes SNMP scanning storms that appear random in device logs?,1. Manual scan triggers overlap scheduled discovery. 2. Scan ranges too broad without concurrency tuning. 3. DCA host NIC buffering issues or Windows TCP stack delays.
+What indicates IIS binding problems post-Printanista upgrade?,1. HTTP/HTTPS access shows ERR_CONNECTION_REFUSED. 2. IIS console shows broken certificate bindings. 3. Hub service logs show invalid HTTPS endpoint errors.
+What are warning signs that scheduled scans on DCA are corrupted?,1. Device counts fluctuate by hundreds between normal scans. 2. Scheduled jobs disappear from DCA local UI. 3. dca.config shows empty scan definitions.
+What triggers high WebSocket reconnection rates in DCA logs?,1. Unstable network link between DCA and Hub. 2. Firewall session limits set too aggressively. 3. Proxy server forcefully closing idle SSL sessions.
+What signs suggest SQL Server autogrowth settings are misaligned for Printanista?,1. Rapid autogrowth logs during peak scan times. 2. SQL server memory pressure warnings in Event Viewer. 3. Fragmented database index scans during maintenance.
+What can cause SMTP email test failures even when credentials are correct?,1. STARTTLS required but not negotiated. 2. Firewall filtering SMTP handshake keywords. 3. Email server IP whitelisting not updated for Hub server.
+What are signs that SNMP credential rotation failed on large customer sites?,1. Sharp drop in device discovered counts. 2. Repeated SNMP authentication failures logged. 3. Scan intervals elongate abnormally due to retry delays.
+What should I validate if Printanista syncs but device meters never populate?,1. Confirm DCA scan profile includes meter OIDs. 2. Hub scan import jobs enabled. 3. SNMPv2c walk success for key meter branches.
+What triggers an orphan device status even with an active DCA online?,1. Device moved between subnets without scan range update. 2. Serial number mismatch post firmware update. 3. Duplicate Edge ID registration.
+What would cause DCA service startup to be delayed by several minutes?,1. Excessive scan ranges loaded into memory. 2. Network timeouts during initial SNMP discovery bootstrap. 3. Windows service dependencies starting slowly.
+What are common signs of corrupted SQL indexes post server crash?,1. Sudden device count drops. 2. Search operations timeout in Hub UI. 3. Event ID 9002 or 9001 in SQL logs.
+What could cause supply levels to 'jump' 30% without cartridge change?,1. Printer supply firmware recalibration. 2. SNMP polling catching cache data after reboot. 3. Incorrect device configuration broadcast to SNMP agent.
+What early signs show DCA has memory leaks post-upgrade?,1. Increasing RAM usage with no corresponding increase in device scans. 2. Service uptime exceeding 7+ days shows exponential memory growth. 3. Windows Out-Of-Memory errors tied to DCA process.
+What causes SNMPv2c retries to spike across entire DCA customer set?,1. WAN carrier packet loss. 2. Inconsistent SNMP agent behaviors post printer firmware push. 3. Unexpected VLAN segmentation.
+What can trigger RDL remote print jobs to fail silently?,1. SSL/TLS handshake errors between Hub and printer. 2. Print spooler crash on Windows server. 3. Missing user context passed to printer backend.
+What could cause multiple SNMP versions to fail even though printer is reachable?,1. Printer firmware updated and disabled SNMP services. 2. Network ACLs blocking UDP 161 but not ICMP. 3. Wrong community strings saved after config changes.
+How do I manually confirm WebSocket connection success from DCA?,1. Open dca.log and search for 'Connected using WebSocket'. 2. Look for no fallback entries immediately after connection event.
+What can cause Printanista Hub Admin interface to partially load but fail at login?,1. SQL Server slow to respond. 2. IIS worker process crashed but auto-restarted. 3. Incomplete app pool recycling during maintenance window.
+What causes DCA licensing retries to flood the logs?,1. Proxy intercepting license validation requests. 2. Expired license token not being refreshed. 3. SSL/TLS handshake failures mid-validation.
+What steps diagnose SNMPv3 failures despite correct credentials?,1. Confirm SNMP engine ID configured. 2. Check for mismatched authentication or privacy protocols. 3. Validate printer firmware supports full SNMPv3 negotiation.
+What would cause a DCA to falsely report all printers offline after firewall change?,1. UDP 161 blocked while ICMP still allowed. 2. NAT rules broken causing SNMP responses to be lost. 3. Firewall inspecting and blocking fragmented UDP packets.
+How do I detect whether devices are being scanned redundantly by multiple DCAs?,1. Compare IP scan ranges. 2. Search device MAC addresses across multiple DCA Edge IDs. 3. Look for duplicate serials in the Hub device dashboard.
+What causes SMTP relay rejection errors even with correct Hub settings?,1. Hub server IP not whitelisted on SMTP server. 2. SMTP server requires encrypted sessions and STARTTLS not forced. 3. Message size exceeds server policy.
+What can cause SNMP scan success but device data still missing meters?,1. Device firmware hiding PageCounter OIDs. 2. Timeout during SNMP MIB walk mid-scan. 3. Scan profile missing supply or meter fields for specific model.
+What causes Edge ID resets without reinstalling DCA?,1. Manual purge of local registry keys. 2. Windows system restore rolling back service states. 3. Edge ID expiration policy triggered by Hub settings.
+How do I confirm if SQL AlwaysOn configuration is incompatible with Printanista Hub?,1. Look for login errors mentioning multi-subnet failover. 2. Hub unable to maintain persistent connection string. 3. Read/write routing conflicts on SQL Listener.
+What can cause SNMP retries to max out only on certain subnets?,1. VLAN misrouting. 2. Printer SNMP agent asleep. 3. MTU fragmentation issues affecting UDP delivery.
+How do I manually validate if supplies OIDs are returning correct live values?,1. Use SNMP walk to pull 1.3.6.1.2.1.43.11.1.1.9 (prtMarkerSuppliesLevel). 2. Compare multiple samples across hours. 3. Confirm consistent depletion tracking.
+What would cause SNMPv1 scans to succeed while v2c scans timeout?,1. Firewall blocks larger SNMPv2c packet sizes. 2. Printer firmware disables v2c mode after failed auth attempts. 3. Scan profile incorrectly prioritizes v2c despite network limitations.
+What indicates IIS site corruption post server reboot?,1. Sites show 503 Service Unavailable. 2. Event Viewer logs missing binding certificates. 3. App pool failure on .NET Core dependency load.
+What would cause Printanista DCA to appear connected but upload no devices for 24h+?,1. Scan schedules paused. 2. SNMP community mismatch undetected. 3. Firewall allowed hub sync but blocked device scans.
+What steps confirm successful SNMP fallback from v2c to v1 without crash?,1. dca.log shows v2c handshake attempt then v1 success entry. 2. Device reports supply/meter OIDs properly even after fallback.
+What can cause a DCA uninstall to fail leaving remnants?,1. Service dependency lock. 2. Windows MSIExec cache corruption. 3. Manual deletion of ProgramData folder without stopping services.
+What indicates SQL tempdb contention in a live Hub system?,1. Report generation gradually slows. 2. SQL Error 1105 'Could not allocate space for object'. 3. Temporary table creation fails intermittently.
+What triggers 'Ghost Print Jobs' where devices accept jobs but print nothing?,1. Printer SSL/TLS miscommunication with RDL. 2. Invalid PCL/PS drivers in job template. 3. Incorrect port configuration on printer.
+What could cause licensing to expire even after a manual reactivation?,1. Activation window tied to wrong public key. 2. System clock drift invalidated license period. 3. Manual overwrite of license database table failed.
+What signs show SMTP throttling issues from third-party email providers?,1. Hub emails delay unpredictably. 2. 421/450 SMTP soft error codes logged. 3. Email quotas reached on shared SMTP relays.
+What causes DCA scan concurrency to behave erratically after a service crash?,1. Thread pooling corruption. 2. Windows OS socket exhaustion. 3. Unreleased SNMP sockets not cleared after force shutdown.
+What causes partial device attribute failures during SNMP walks?,1. Printer SNMP agent returns partial OID trees. 2. DCA timeout settings too aggressive. 3. UDP packet loss during bulk walk.
+What symptoms show printer firmware downgrade broke SNMP supply reporting?,1. Supplies reported as -1%. 2. All toner levels flatline at 0% despite new cartridges. 3. MIB branches missing during manual walk.
+What causes DCA scan schedules to drift by hours over time?,1. Server clock drift with no NTP sync. 2. Windows Task Scheduler service instability. 3. Time zone changes without reboot.
+What could cause Printanista WebAudit agents to be stuck 'in discovery' indefinitely?,1. Printer SNMP agents nonresponsive mid-walk. 2. TCP session timeout on discovery ports. 3. SSL negotiation hangs during agent initiation.
+What triggers IIS recycling causing mid-session logouts in Hub?,1. Idle timeout too low. 2. Private memory cap exceeded. 3. Rapid fail protection triggers auto-restart.
+What can cause DCA heartbeat intervals to shorten randomly?,1. Hub server configuration change forcing aggressive pings. 2. Network flapping between redundant ISPs. 3. Internal clock drift affecting scheduled intervals.
+What indicates SQL server TCP/IP protocol disabled causing Printanista outage?,1. Connection refused errors at Hub login. 2. Event ID 17809 logged in SQL Error Logs. 3. ODBC client errors referencing TCP Provider.
+What would cause sudden duplicate IP addresses reported across unrelated DCAs?,1. Misconfigured VPN tunnels overlapping subnets. 2. NAT overload with identical device IPs mapped externally. 3. Scan profile mistakenly assigned to multiple tenants.
+What causes SNMPv3 authPriv scans to randomly timeout?,1. Printer resource exhaustion at SNMP agent. 2. UDP reassembly failures during SNMPv3 encryption. 3. Firewall idle timeout shorter than SNMP walk duration.
+What happens if multiple SMTP servers are configured but none are prioritized correctly in Hub?,1. Random server selected per attempt. 2. Failed retries if unreachable server picked first. 3. Alerts delayed unpredictably.
+What signs indicate WebSocket compression settings are corrupt in DCA?,1. Payload mismatch errors in Hub logs. 2. WebSocket handshake succeeded but session closure at compression negotiation. 3. Abnormally large outbound WebSocket frames.
+What steps validate a new Edge ID was properly registered after DCA reinstallation?,1. Check Admin > DCA Management for new ID. 2. Compare registration timestamps. 3. Confirm no collision with prior IDs in tenant portal.
+What are signs a large SNMP scan caused partial DCA memory exhaustion?,1. dca.log entries show OutOfMemory exceptions. 2. Discovery jobs halt mid-scan without logging success. 3. Service crash within 1 hour of large range start.
+What causes Windows to block DCA service recovery attempts?,1. Group Policy disables service auto-restart. 2. Service marked as non-recoverable after repeated faults. 3. Antivirus engine flags DCA service executable.
+What causes SMTP SSL handshake failures from Printanista Hub?,1. Outdated TLS version on Hub server. 2. Mismatched SMTP server cipher suites. 3. Proxy altering SSL handshake during SMTP negotiation.
+What causes WebSocket failures with HTTP 403 errors?,1. Incorrect WebSocket headers added by reverse proxy. 2. Firewall blocks WebSocket upgrade requests. 3. SSL certificate mismatch during initial handshake.
+What can cause license uploads to succeed but validation to fail in Printanista?,1. Public key and license string mismatch. 2. Hub server clock drift invalidating license expiration logic. 3. Hub database corruption in licensing table.
+What triggers DCA retries even after initial successful registration?,1. Heartbeat acknowledgement failure from Hub. 2. WebSocket idle timeout without reconnect. 3. Unexpected SSL session renegotiation mid-connection.
+What steps diagnose delayed SNMP supply readings in Hub reports?,1. Confirm SNMP walk response times. 2. Validate DCA scan interval settings. 3. Check network congestion at scheduled scan times.
+What causes HTTPS WebAudit discovery scans to hang indefinitely?,1. Device SSL handshake stalls. 2. SSL session cache corruption on agent server. 3. Certificate trust chain validation delay.
+What could cause SQL Server deadlocks specifically during Hub reporting?,1. Long running device data aggregation queries. 2. Poor index maintenance on meter data tables. 3. Tempdb space exhaustion.
+What symptoms show DCA auto-update server list is outdated?,1. DCA attempts to reach deprecated CDN URLs. 2. Logs show repeated DNS lookup failures. 3. Update retries without version delta checks.
+What triggers random devices appearing offline despite valid IPs?,1. SNMP v1/v2c mismatch. 2. Printer SNMP agent crash. 3. Firewall silently drops fragmented UDP packets.
+What causes Printanista portal to throw HTTP 502 Bad Gateway errors randomly?,1. IIS App Pool recycling during peak usage. 2. SQL connection pool exhaustion. 3. Web server SSL/TLS renegotiation errors.
+What indicates a corrupted Printanista report template?,1. Exported PDF or XLSX file blank or malformed. 2. Report generation logs throw unhandled exceptions. 3. Hub portal hangs at report export stage.
+What can cause DCA scan job scheduling conflicts?,1. Overlapping discovery profiles. 2. Cron expression misconfigurations. 3. Manual scan trigger overlaps scheduled scans.
+What signs show Hub device attribute mismatch post-import?,1. Device serials populate but model names mismatch. 2. Device location fields remain blank. 3. Supplies data absent despite device online.
+What causes SNMPv3 authentication to succeed but privacy (encryption) to fail?,1. Incorrect privacy password entered. 2. Printer only partially implements SNMPv3 authPriv. 3. Encryption cipher mismatch between DCA and device.
+What triggers auto-deletion of stale Edge IDs in Printanista?,"1. Admin configuration sets purge window (e.g., 30 days). 2. Manual cleanup of disconnected devices. 3. Database maintenance tasks prune orphaned DCAs."
+What causes RDL remote print jobs to print gibberish?,"1. Incorrect driver type selected (e.g., PS vs PCL mismatch). 2. Printer language settings mismatched. 3. SSL/TLS layer corruption affecting job formatting."
+What are symptoms that SQL Server max degree of parallelism (MAXDOP) needs adjustment?,1. Query execution plans heavily skewed. 2. Random query timeouts during heavy concurrent scans. 3. Report exports inconsistently fast or slow.
+What causes SMTP server 'Relay Access Denied' errors even on trusted networks?,1. SMTP relay restricted to authenticated users only. 2. Server requires STARTTLS but Hub sends plaintext. 3. Server enforces IP address verification.
+What triggers HTTP 408 Request Timeout errors during DCA syncs?,1. Hub server overloaded during bulk device uploads. 2. Load balancer connection timeouts misconfigured. 3. Long database transactions stalling Hub responses.
+What are signs of fragmentation in SQL indexes affecting Printanista performance?,1. Hub device searches slower over time. 2. Report exports increase in size unpredictably. 3. SQL maintenance logs show index fragmentation > 30%.
+What indicates device SNMP walk misalignment despite basic reachability?,1. Expected OIDs missing during walk. 2. Root MIB branches shifted post-firmware upgrade. 3. Supplies subtree returns 'noSuchName' errors.
+What causes false positive 'device missing' alerts even when devices are online?,1. SNMP scan missed due to timeout. 2. Heartbeat windows too narrow for slow subnets. 3. Device ICMP unreachable for >1 scan interval.
+What triggers repeated HTTP 400 Bad Request errors on WebSocket negotiation?,1. Proxy rewriting Upgrade headers incorrectly. 2. DCA client sends unsupported WebSocket version. 3. Load balancer strips critical headers.
+What can cause slow SNMP scan performance in otherwise healthy networks?,1. WAN link packet loss. 2. Printer SNMP agents throttling after high-frequency scans. 3. DCA concurrency not tuned for network latency.
+What causes Printanista scheduled reports to silently fail?,1. SMTP misconfiguration (missing auth). 2. SQL Server blocking background job execution. 3. IIS application pool crashes mid-job.
+What indicates printer firmware rollback broke SNMP supply readings?,1. Supplies walk returns -1 or 'invalid' entries. 2. Device serials present but meters missing. 3. Reboot does not refresh valid SNMP trees.
+What triggers DCA SNMP discovery floods without scheduled triggers?,1. Service restarts cause re-scan from zero. 2. Auto-update forces device resync post-patch. 3. Admin manually triggered large discovery unintentionally.
+What causes Printanista device reports to miss newly added devices?,1. Report filter too strict. 2. Scan intervals out of sync with report schedules. 3. Hub device database cache not refreshed.
+What symptoms show WebAudit remote discovery instability?,1. Discovery sessions timeout mid-scan. 2. SSL handshake fails during bulk scan mode. 3. Viewer USB agents auto-disconnect after 5 minutes idle.
+What causes WebSocket transport fallback loops on DCA startup?,1. Proxy server strips Upgrade headers. 2. Firewall DPI modifies SSL packets. 3. Hub server load balancer incorrectly configured for WebSocket persistence.
+What triggers SQL Server transaction log autogrowth impacting Printanista?,1. Heavy device imports during initial sync. 2. Scheduled reports writing temp data inefficiently. 3. No frequent log backups causing bloated tlogs.
+What causes SMTP STARTTLS negotiation to fail silently?,1. Hub SMTP library lacks required STARTTLS extensions. 2. SMTP server enforces cipher suites unsupported by Hub OS. 3. Intermediate proxy strips STARTTLS advertisement.
+What causes Printanista API authentication tokens to expire prematurely?,1. System clock drift on Hub server. 2. Incorrect OAuth2 refresh logic in integration partner. 3. Hub internal token lifetime policy misconfigured.
+What triggers device SNMP queries to randomly fail mid-scan?,1. Printer SNMP agent enters sleep mode. 2. SNMP session timeout misalignment. 3. Device firmware drops UDP sessions under load.
+What causes IIS Application Pool to rapidly crash after Printanista upgrade?,1. .NET Core runtime mismatch. 2. SQL connection string invalidated during upgrade. 3. App pool recycle settings reset improperly.
+What indicators show SQL Server page latch contention impacting Printanista?,1. Query wait times spike randomly. 2. SQL DMVs show PAGEIOLATCH waits increasing. 3. Hub UI slows during peak hours despite low CPU.
+What symptoms show DCA scan retries are overwhelming network links?,1. ICMP ping latencies spike during scans. 2. WAN links saturated with SNMP retries. 3. Firewall logs flood with UDP retry flags.
+What causes Printanista reports to contain inconsistent device counts?,1. Orphan devices filtered differently in report template. 2. SQL read replicas lagging if multi-node DB cluster used. 3. Report generation window spans multiple scan cycles.
+What triggers WebAudit agent to silently de-register from Printanista?,1. USB host machine sleeps or hibernates. 2. Network switch drops port during low activity. 3. SSL certificate validation error during heartbeat.
+What can cause DCA memory usage to spike unexpectedly on 64-bit servers?,1. DCA remains a 32-bit process and hits 2GB RAM ceiling. 2. Large SNMP scan ranges without concurrency throttling. 3. Memory fragmentation in unmanaged SNMP sessions.
+What happens if Windows Service Recovery is disabled for DCA service?,"The DCA will not auto-restart after crash, leading to missed scans and offline device updates until manual intervention."
+What are early signs that DCA is experiencing 32-bit memory exhaustion?,1. Slow scan response over time. 2. Service termination without error dialog. 3. Logs show OutOfMemory or Exception codes near 2GB usage.
+What could cause DCA service to stop responding even if CPU usage remains low?,1. Memory fragmentation within 32-bit address space. 2. SNMP walk overflow. 3. Failed WebSocket recovery loops consuming threads.
+What IIS misconfiguration leads to HTTP Error 500.19 on Printanista Hub?,1. web.config syntax errors. 2. Incorrect application pool .NET version assignment. 3. Missing applicationHost.config handlers.
+What triggers SQL Server tempdb full conditions affecting Printanista performance?,1. Large report generations without result caching. 2. High concurrent Hub API activity. 3. Lack of scheduled tempdb shrink/cleanup tasks.
+What causes DCA to crash intermittently on devices with low SNMP buffer sizes?,1. Printer SNMP agents truncate OID responses. 2. UDP packet fragmentation exceeds Windows default receive buffers. 3. SNMP walk thread overflows memory pool.
+What leads to unexpected IIS application pool recycling in Hub during light load?,1. Private memory threshold too low. 2. Idle timeout policies kicking in. 3. SSL session cache corruption.
+What causes DCA WebSocket connections to degrade over long uptime?,1. 32-bit memory leaks across heartbeat sessions. 2. SSL session renegotiation failures. 3. Garbage collection starvation in .NET background threads.
+What triggers SQL Server blocking chains that halt Printanista reporting?,1. Long-running scans writing meter data. 2. Simultaneous mass report exports. 3. Missing nonclustered indexes on report-critical tables.
+What are the risks of running DCA indefinitely without scheduled reboots?,1. Memory fragmentation in 32-bit process space. 2. SNMP socket leaks. 3. Edge ID session corruption over extended uptime.
+What indicates an SSL certificate binding failure in Printanista IIS setup?,1. Hub inaccessible over HTTPS. 2. netsh http show sslcert shows missing bindings. 3. Browser error NET::ERR_CERT_COMMON_NAME_INVALID.
+What causes DCA device scans to halt when Windows enters low resource state?,1. Pagefile exhaustion impacting unmanaged memory pools. 2. SNMP walk threads starve for available stack memory. 3. TCP/IP session table overflow.
+What is the default maximum memory DCA can address due to 32-bit limitations?,Roughly 2GB of virtual address space before fragmentation or process crashes occur.
+What indicates DCA SNMP retries are overwhelming UDP stack capacity?,1. High ICMP packet loss during scans. 2. Firewall logs show excessive SNMP retries. 3. Event Viewer shows UDP receive buffer exhaustion.
+What IIS setting can silently block large Printanista reports?,"Request Filtering maxAllowedContentLength set too low, truncating large report generation POST requests."
+What triggers Printanista Hub SQL Server timeouts during scheduled device syncs?,1. Device discovery flood overlaps sync window. 2. Tempdb contention from parallel report jobs. 3. Insufficient SQL connection pool settings.
+What causes DCA service to start but fail to scan devices?,1. SNMP driver initialization failure. 2. Config corruption during auto-update. 3. Memory reservation failure at startup.
+What IIS security setting can break Hub login without warning?,"RequestHeaderLimits configured too small, truncating authentication tokens in HTTPS headers."
+What symptoms show SNMP agent crash on target printers during DCA walk?,1. Sudden ICMP-only responses. 2. SNMP NoSuchName errors mid-tree. 3. Printer reboot during heavy scan cycles.
+What happens if SQL Server statistics are outdated in Printanista environment?,1. Query execution plans become inefficient. 2. Device search operations slow dramatically. 3. Report exports timeout unpredictably.
+What causes DCA service crashes when device count exceeds normal thresholds?,1. 32-bit memory limit exceeded. 2. SNMP session flood overwhelms Windows UDP stack. 3. Internal array size assumptions exceeded in scan routines.
+What causes Printanista API calls to fail intermittently despite working authentication?,1. SQL deadlock under high load. 2. IIS worker thread starvation. 3. Load balancer idle session resets.
+What causes DCA to incorrectly fallback from WebSocket to Long Polling even on stable networks?,1. Memory leak affecting SSL session renegotiation. 2. Proxy server idle timeout expires before heartbeat. 3. Internal retry logic misfires during garbage collection stalls.
+What can corrupt a Printanista Hub license upload process?,1. SQL Server autogrowth event mid-upload. 2. web.config file locks during IIS restart. 3. Public Key mismatch during database write.
+What causes DCA crash-on-startup after a Windows Update?,1. SNMP service disabled or reconfigured by update. 2. .NET Framework components broken. 3. Local firewall reset blocking registration handshake.
+What SQL setting most critically affects Printanista multi-user report generation?,Max Degree of Parallelism (MAXDOP) set too high or too low compared to CPU count.
+What firewall misconfiguration causes DCA syncs to randomly fail despite initial connection?,"Firewall closes idle HTTPS sessions early, killing heartbeat pings before successful syncs complete."
+What IIS SSL setting can prevent Hub scheduled reports from emailing correctly?,SSL offloading misconfiguration removes required authentication headers from SMTP payloads.
+What triggers device scan loops where DCA keeps re-discovering the same printers?,1. SNMP agent resets counters mid-scan. 2. Printer reboots during discovery window. 3. DCA cache invalidation mid-thread execution.
+What signs show SQL Server tempdb temp table saturation during Printanista operation?,1. Tempdb autogrowth every few minutes. 2. Report export failures. 3. Device discovery inserts timing out under heavy load.
+What DCA configuration mistake can cause SNMP walks to halt on certain models?,"Setting ScanConcurrency too high overwhelms printer's SNMP agent, causing walk abandonment."
+What happens if DCA service tries to auto-update but disk space is low?,1. Update download fails. 2. Installer corrupts DCA executable. 3. Auto-retry loops flood log files.
+What causes Hub portal device counts to differ from DCA scan results?,1. Hub sync job failure. 2. Scan results filtered by tenant/device access policies. 3. SQL indexing delay after inserts.
+What causes 32-bit DCA services to crash during unusually large SNMP supply walks?,1. Memory exhaustion near 2GB address space. 2. SNMP buffer overruns. 3. Thread pool starvation under large object graphs.
+What causes SMTP server handshake failures at only specific times of day for Printanista?,1. SMTP load balancer rotates to strict enforcement node. 2. ISP routing changes mid-day affecting SSL negotiation. 3. Exchange maintenance windows imposing brief auth token resets.
+What can silently corrupt Printanista web.config settings post-upgrade?,1. Upgrade script overwrites without merging old settings. 2. Manual editing errors by admins. 3. Antivirus or endpoint security products modifying IIS folder permissions.
+What behavior shows a DCA Edge ID collision event?,1. Devices disappear then reappear in another customer tenancy. 2. Duplicate MAC/IP mappings across tenants. 3. Hub event logs show duplicate EdgeID error.
+What Windows Event Viewer errors correlate most closely with DCA SNMP failures?,1. Event ID 1500 - UDP buffer exhaustion. 2. Event ID 7011 - SNMP trap service timeout. 3. Event ID 4227 - TCP/IP stack resource exhaustion.
+What SQL Server configuration must be validated after Printanista scale-out?,1. Tempdb on separate fast volume. 2. Max worker threads adjusted for concurrent Hub sessions. 3. Memory settings reserved for OS + SQL instance balance.
+What triggers DCA licensing to appear valid locally but 'Not Licensed' in Hub?,1. Heartbeat failures preventing license validation echo. 2. Expired session token not refreshing during reconnection. 3. Hub-side licensing module crash during sync cycle.
+What causes IIS SSL bindings to vanish after server reboot?,1. Netsh SSL binding not persistent across network adapter resets. 2. Certificate expired causing binding purge. 3. Windows update clearing SSL CertStore policies.
+What leads to 32-bit DCA services leaking handles on high SNMP concurrency?,1. SNMP sockets not closed properly after timeouts. 2. WMI resource pool exhaustion. 3. UDP buffer overflow not reclaimed on walk failure.
+What triggers device rediscovery storms after a Hub upgrade?,1. Schema version mismatches. 2. Rebooted DCA services resyncing cache. 3. Duplicate Edge ID entries temporarily during upgrade window.
+What triggers HTTP 502 or 503 errors when loading Hub admin page?,1. SQL Server handshake failure during IIS startup. 2. Application Pool Identity misconfigured. 3. Excessive background worker thread starvation.
+What causes DCA Edge ID registration to randomly reset during stable uptime?,1. Registry hive corruption during crash recovery. 2. Local disk cache invalidated by antivirus actions. 3. Manual edits of dca.config without valid backup.
+What network misconfigurations silently delay WebSocket handshakes for DCA?,1. QoS packet tagging misaligned for SSL traffic. 2. Intermediate firewall applies traffic shaping to SSL 443 but not WebSocket upgrades. 3. MTU fragmentation during initial SSL handshake.
+What happens if SNMP walk OIDs are truncated on devices mid-scan?,1. Device scan incomplete. 2. Device serial/model fields missing. 3. Hub maps device based only on IP fallback without model or MAC.
+What symptoms show tempdb contention specific to Printanista meter scans?,1. Long-running meter insertion jobs. 2. SQL wait types latch onto tempdb bottlenecks. 3. Devices appear discovered but no meter readings imported.
+What risks arise from setting DCA AutoUpdate to 'manual only'?,1. Critical security patches missed. 2. Compatibility gaps widen over Hub upgrades. 3. Registration certificates may expire without alert.
+What triggers IIS compression module crashes affecting Hub portal loading?,1. Broken dynamic compression filters. 2. Incorrect MIME type mappings for API payloads. 3. IIS Rewrite module recursion loops.
+What causes Hub SMTP alerts to pass email test but fail on scheduled reports?,1. Authenticated SMTP relay requires session persistence. 2. Firewall resets idle SMTP sessions. 3. STARTTLS negotiation incomplete at scheduled interval.
+What causes duplicate MAC addresses to show across different tenant accounts?,1. Network cloning via imaging software without MAC randomization. 2. Edge ID duplication from copied dca.config. 3. Rogue DHCP devices.
+What IIS configuration must be validated before enabling SSO for Hub?,1. Windows Authentication enabled in IIS. 2. Anonymous Authentication disabled for login portal. 3. Proper SPN delegation in Active Directory.
+What leads to ghost devices appearing after mass DCA redeployment?,1. Old Edge ID entries never purged. 2. Hub cleanup job failures. 3. Devices matched only by partial MAC/IP fingerprint.
+What triggers DCA update loops with repeated partial installs?,1. Disk IO stalls during installer writes. 2. Windows UAC interference mid-update. 3. Corrupt delta update payloads from CDN cache.
+What SNMP anomaly triggers DCA to fall back to ICMP-only discovery?,1. SNMP v1 and v2c both rejected by device. 2. UDP port filtered by firewall inline. 3. Printer agent enters safe mode or low-power state.
+What settings cause Hub device group policies to overwrite device attributes?,1. Group-specific scan profiles assigned. 2. Hub device template mappings override imported data. 3. Post-import processing scripts active on tenant portal.
+What causes WebAudit USB agents to repeatedly disconnect during discovery?,1. Host machine power saving settings on USB ports. 2. Antivirus quarantine of Viewer processes. 3. Network adapter sleep settings interfering with SNMP sessions.
+What triggers DCA device duplication where same IP shows twice?,1. Device firmware sends multiple MAC addresses on SNMP response. 2. Scan range overlap across discovery jobs. 3. Hub database deadlock during device insert.
+What causes SMTP TLS negotiation failures only during Hub report generation but not email tests?,1. Report engine uses separate SMTP library without STARTTLS fallback. 2. SMTP server enforces TLS 1.2 minimum only during bulk send window. 3. Intermediate proxy resets STARTTLS flag during large payload handoff.
+What leads to SNMP authentication failures during walk retries despite successful initial scans?,1. Printer resets community string on low power cycle. 2. Network ACL rules expire TCP/UDP session prematurely. 3. SNMP trap agent conflicts with SNMP walk agent responses.
+What triggers repeated WebSocket SSL renegotiation attempts in DCA logs?,1. Proxy SSL offloading policy mid-session change. 2. WebSocket keepalive failure triggering re-handshake. 3. Hub server idle session timeout too short for heartbeat interval.
+What can silently break SQL Server availability group connections from Hub?,1. Read-intent routing misconfiguration. 2. Secondary replica read-only state enforced incorrectly. 3. Connection string missing MultiSubnetFailover parameter.
+What symptoms show DCA UDP exhaustion leading to device discovery slowdowns?,1. ICMP pings remain successful but SNMP fails at high concurrency. 2. Windows kernel logs show UDP drops. 3. SNMP walks time out despite low network latency.
+What causes multiple failed SMTP test attempts even when credentials seem correct?,1. SMTP server requires full qualified domain name (FQDN) from client. 2. STARTTLS handshake fails silently. 3. SMTP AUTH command syntax mismatch due to library versions.
+What triggers 404 errors on Hub API endpoints post-upgrade?,1. Web.config URL rewrite rules lost. 2. IIS virtual directory misassignment. 3. API controllers not properly mapped after .NET update.
+What leads to DCA scan retries looping indefinitely without fallback?,1. SNMP agent firmware lockup mid-tree. 2. DCA retry logic misconfigured in dca.config. 3. Network blackhole routing loops.
+What causes duplicate Edge ID records to linger post-migration?,1. Manual purge not executed. 2. Hub replication delays across cluster nodes. 3. SQL constraint violation during Edge ID insert attempt.
+"What indicates firewall SSL inspection is blocking only WebSocket upgrades, not HTTPS?",1. DCA registers but fallback to Long Polling happens every session. 2. Curl to Hub URL succeeds but WebSocket upgrade header missing. 3. SSL renegotiation errors mid-session.
+What triggers Hub report generation jobs to crash without output?,1. SQL read timeout mid-export. 2. IIS Application Pool private memory limits breached. 3. Template file corruption in Reports folder.
+What causes WebAudit Viewer USB agent to fail at SNMP walk stage?,1. USB port power loss. 2. Driver conflicts with Windows SNMP service. 3. Viewer agent version mismatch with Hub API expectations.
+What causes SQL Server AlwaysOn to cause brief Hub outages during failover?,1. Connection strings lack automatic retry logic. 2. Read/write routing not defined for Hub transactions. 3. Hub session cache tied to old primary node.
+What causes SNMP scanning speed to fluctuate drastically between DCA scan cycles?,1. Printer SNMP agent rate limiting per hour. 2. WAN carrier jitter. 3. CPU scheduling shifts on DCA host server.
+What triggers DCA heartbeat timeout without complete WebSocket drop?,1. Firewall closes SSL tunnel after idle heartbeat window. 2. TCP keepalive settings too aggressive. 3. SSL session renegotiation resets ping clock.
+What causes SQL database deadlocks primarily on tempdb temp tables?,1. Concurrent report and device import jobs writing temp tables. 2. Auto-update schema operations clashing with Hub syncs. 3. Poor tempdb disk layout.
+What symptoms show print jobs stuck in RDL remote queues despite job accepted?,1. Printer rejecting unknown SSL cert fingerprints. 2. Job payload size exceeding firmware buffer limits. 3. Printer backend crash during secure job parsing.
+What can cause the DCA to silently lose SNMP discovery capabilities without crashing?,1. Windows SNMP driver service stops responding. 2. Firewall silently blocks outgoing UDP 161 after policy update. 3. NIC driver resets or disables promiscuous mode.
+What triggers WebAudit Viewer agents to falsely report devices as offline?,1. USB sleep mode interrupts SNMP discovery mid-scan. 2. Viewer agent session timeout shorter than printer response times. 3. Host PC antivirus delays SNMP replies.
+What causes IIS logs to grow unusually large after Printanista patching?,1. Verbose request tracing enabled by accident. 2. Debug mode left active in web.config. 3. SMTP relay failures causing 500-series response flooding.
+What indicates a DNS-related failure preventing DCA license validation?,1. Registration attempts show 'Name resolution failure' in dca.log. 2. Hub heartbeat succeeds on IP address but not FQDN. 3. Manual nslookup to reg.pf-d.ca fails.
+What causes SNMP walk corruption only after printer firmware updates?,1. MIB branches reordered unexpectedly. 2. Missing or deprecated OIDs at legacy firmware levels. 3. Supplies OID trees partially removed.
+What causes Hub reports to exclude devices visible in Admin > Devices?,1. Report filters misconfigured by device type. 2. Orphan devices excluded automatically. 3. Device scan attribute mapping failed during import.
+What triggers SQL autogrowth storms impacting Hub responsiveness?,1. Initial device syncs exceed initial DB size estimates. 2. Report generation scheduled during peak sync intervals. 3. SQL Server instant file initialization disabled.
+What causes WebSocket close code 1006 to spike randomly in DCA logs?,1. Firewall SSL DPI mid-session resets. 2. TCP/IP socket exhaustion on DCA host. 3. Hub load balancer drops idle SSL tunnels unexpectedly.
+What causes SMTP relay test failures only from specific Hub tenants?,1. SMTP routing rules based on source IP ranges. 2. SMTP authentication tokens cached per tenant portal. 3. Tenant-level firewall ACLs differ internally.
+What indicates DCA discovery flooding affecting edge switches?,1. Switch logs show SNMP UDP flood warnings. 2. Printer web interfaces inaccessible during active scan windows. 3. VLAN interface CPU usage spikes.
+What triggers IIS kernel-mode authentication failures on HTTPS endpoints?,1. Incorrect delegation policy on app pool identity. 2. SSL binding mismatch during SNI handshake. 3. NTLM negotiation interrupted by SSL session reuse.
+What can cause DCA SNMP scans to complete but Hub import jobs to fail?,1. Device fingerprints incomplete (missing serials or MACs). 2. SQL Server transaction rollback mid-import. 3. Hub queue worker crashes.
+What indicates Hub database deadlocks are driven by orphan device cleanups?,1. Deadlock graphs point to Device or DeviceAttribute tables. 2. Cleanup jobs take longer after major DCA shutdowns. 3. Orphan device count spikes prior to lockouts.
+What causes Hub Admin portal to timeout at login under normal CPU loads?,1. SQL session pool exhaustion. 2. IIS dynamic compression filter failure. 3. Kerberos delegation token expiry during authentication attempt.
+What triggers RDL remote print jobs to print blank pages only?,"1. Printer language mismatch (expected PCL, received PostScript). 2. SSL payload corruption during transmission. 3. Incorrect document encoding during job generation."
+What can cause duplicate devices to persist even after forced Hub device merge?,1. Old device fingerprints not fully purged in DB. 2. Multiple Edge IDs simultaneously reporting stale device states. 3. Scan range overlap between DCAs.
+What causes SMTP server handshake timeouts exactly at 15 seconds?,1. Default Windows TCP client timeout reached. 2. SMTP server enforcing TLS handshake window strictly. 3. Network carrier TCP KeepAlive settings mismatched.
+What triggers intermittent 'NoSuchName' SNMP responses during live walks?,1. Printer SNMP agent cache eviction. 2. Firmware bug in dynamic MIB allocation. 3. Printer entering low power mode mid-walk.
+What causes Printanista scheduled reports to trigger twice or duplicate emails?,1. IIS recycling schedules overlapping with report engine timers. 2. Background job retries without clearing prior job markers. 3. SMTP server delay acknowledgments causing job misinterpretation.
+What triggers Hub device sync jobs to skip entire customer tenants?,1. Tenant-specific DB schema corruption. 2. Device ownership tags misaligned. 3. SQL Server transaction rollback on tenant partition.
+What can cause DCA log files to reach gigabytes in size within days?,1. Debug mode left active. 2. Continuous SNMP retries flooding transport logs. 3. Repeated auto-update failures stacking retries.
+What happens if DCA Edge ID is manually duplicated across different tenants?,1. Devices flap between two portals. 2. Licensing validation fails for both tenants. 3. Hub event logs flood with duplicate EdgeID warnings.
+What causes SQL AlwaysOn Listener failover delays impacting Printanista?,1. No MultiSubnetFailover=True flag in connection strings. 2. DNS failover propagation delay. 3. Secondary node requires manual read/write role promotion.
+What causes IIS Application Pool CPU spikes after SSL certificate renewals?,1. IIS worker processes fail to load new certificates correctly. 2. App pool startup includes invalid CRL checks. 3. SSL binding repair triggers excessive background tasks.
+What triggers firewall IDS systems to flag DCA traffic as UDP flood attack?,1. High concurrency SNMP scans exceeding 100 simultaneous sessions. 2. Short discovery intervals. 3. Burst scanning after Windows service recovery.
+What signs show device SNMP agent throttling due to aggressive scanning?,1. Delayed SNMP response times over sequential scans. 2. Random supply level dropouts. 3. Firmware watchdog timer resets logged at printer side.
+What causes RDL direct jobs to be accepted by printers but never printed?,1. Job security policies (PIN release required). 2. TLS encryption mismatch during spool submission. 3. Spool service crash mid-job.
+What could cause device meters to update inconsistently even with healthy DCA scans?,1. Meter OIDs buried under non-standard branches. 2. Printer SNMP agent cache delay. 3. WAN latency during DCA device uploads.
+What triggers WebAudit agents to fail when scanning printers behind NAT?,1. SNMP responses mapped to wrong external IP. 2. NAT traversal policies blocking UDP responses. 3. TCP proxy translation interfering with SNMP packet headers.
+What signs show Hub SSL offloading breaking Printanista API authentication?,1. Authorization headers dropped at load balancer. 2. HTTP 401 or 403 errors randomly appear. 3. OIDC tokens missing during refresh cycle.
+What causes SQL Server spinlock contention during Hub report exports?,1. Poor query parallelization. 2. Small batch inserts clashing with mass exports. 3. Lack of temp table caching for repeated device queries.
+What causes WebSocket idle disconnects exactly at 30 minutes?,1. Load balancer idle session timeout set to 1800 seconds. 2. Proxy resets SSL session without renegotiation. 3. TCP KeepAlive disabled.
+What symptoms show Hub portal fragmentation on large tenant portals?,1. Search delays scaling with device counts. 2. Device attribute pages loading partial fields. 3. Reports timing out only for large tenants.
+What triggers DCA retry storms when network proxy fails open?,1. Proxy connection reset floods retries. 2. DCA unable to establish clean WebSocket handshake. 3. SSL handshake mid-fallback fails silently.
+What causes SMTP authentication to intermittently fail every 24 hours?,1. SMTP session token expiration. 2. Password policy triggers mandatory refresh. 3. SMTP relay rotates backend nodes on daily schedule.
+What indicators show firewall DPI interference mid-SNMP scan?,1. UDP checksum errors logged at firewall. 2. SNMP packet truncation on specific payload sizes. 3. Burst UDP packet loss during discovery.
+What triggers device scan ranges to silently reset in DCA?,1. Config file corruption during auto-update. 2. Manual edits to dca.config with syntax errors. 3. Windows System Restore rollback of service state.
+What causes Printanista Hub reports to export incomplete meter readings?,1. Meter OIDs missing from scan profile. 2. SQL read timeout pulling large meter datasets. 3. Background device sync jobs locking meter tables.
+What symptoms show SQL Server CPU starvation impacting Hub UI response?,"1. SQL wait stats spike (e.g., SOS_SCHEDULER_YIELD). 2. Query execution times vary wildly. 3. IIS connections backlog without increasing CPU load on IIS server."
+What can cause Hub admin login to hang indefinitely without 500 errors?,1. SQL session pool deadlock. 2. Web.config authentication provider misconfiguration. 3. IIS app pool stuck in recycling loop.
+What network behavior causes WebAudit Viewer USB agents to randomly disconnect?,1. USB selective suspend enabled in Windows. 2. SSL handshake revalidation triggered by intermediate proxy. 3. TCP/IP stack exhaustion on client machine.
+What causes RDL remote printing jobs to appear successful but never leave queue?,1. Printer SSL certificate trust failure. 2. RDL agent loses network route mid-submit. 3. Spool service crashes after job submission without logging.
+What triggers SMTP relay tests to pass but real alerts to fail silently?,1. SMTP server accepts test payload but drops bulk payloads. 2. Email templates exceed allowed message size. 3. SMTP server greylisting based on sender volume.
+What can cause Hub device groups to auto-reassign devices incorrectly?,1. Device type attributes misclassified during scan. 2. Hub rule misapplied to broader IP range. 3. Tenant-level group policies override device-specific settings.
+What causes SNMP scans to succeed but only partial device attributes imported?,1. MIB tree reordered or restricted post firmware update. 2. Timeout mid-walk cutting off supplies or meter sections. 3. SNMPv2c partial fallback masking incomplete walks.
+What symptoms show SQL Server I/O throttling issues impacting Printanista report generation?,1. Sudden spikes in IO_LATCH waits. 2. Hub search results delayed or timeout. 3. Reports start generation but never complete.
+What causes DCA licensing to fail intermittently despite valid public keys?,1. System clock drift. 2. Firewall resets SSL session during license handshake. 3. Load balancer changes SSL persistence token mid-connection.
+What triggers IIS worker process memory exhaustion after Printanista upgrade?,1. Resource leaks in new application handlers. 2. Incorrect app pool settings inherited from prior version. 3. Insufficient private memory thresholds.
+What causes SNMP v1 scans to succeed but SNMP v2c scans to intermittently timeout?,1. MTU fragmentation on larger SNMPv2c packets. 2. Firmware bugs causing v2c sessions to hang on specific OIDs. 3. Router ACLs allow small UDP but block jumbo frames.
+What triggers WebSocket SSL renegotiation failures at specific intervals?,1. TCP session timeout enforced by firewall at 30 minutes. 2. SSL session cache rotation at load balancer. 3. DCA SSL library not renegotiating tokens correctly.
+What symptoms show SQL Server lock escalation failures impacting Printanista tenants?,1. Long locks on Device or Attribute tables. 2. Tenant isolation boundaries breached during concurrent inserts. 3. Session blocking graphs reveal hotspot tenants.
+What causes RDL direct print jobs to succeed on monochrome printers but fail on color devices?,1. Incorrect color profile encoding. 2. Printer language mismatch (PCL5 vs PCL6 vs PS3). 3. Driver security settings rejecting unauthorized job types.
+What network changes silently break DCA registration without obvious firewall errors?,1. DNS redirect rules block reg.pf-d.ca. 2. Transparent proxy strips SNI fields during SSL handshake. 3. TCP MSS clamping fragments handshake packets.
+What can cause device orphan rates to spike even after healthy DCA scans?,1. Edge ID mismatch post-DCA reinstall. 2. Device serial reindexed incorrectly by Hub. 3. Licensing handshake failure invalidating device ownership.
+What causes Hub portal to render login page but fail after password submit?,1. SQL authentication failure mid-session. 2. IIS Application Request Routing module crash. 3. SAML/OIDC authentication token invalid.
+What triggers SQL tempdb contention symptoms even at low Hub usage?,1. Report generation window collides with nightly maintenance. 2. Uncached dynamic queries from API calls. 3. Background device syncs flood temp tables.
+What causes SMTP authentication failures linked to Active Directory password expiry?,1. Hub uses hardcoded service account password. 2. SMTP AUTH tokens cached incorrectly after password change. 3. Email relay server enforces frequent password resets.
+What can cause DCA to ignore new devices added to network despite healthy scans?,1. Scan range not expanded to cover new subnets. 2. Device responds with incorrect SNMP sysObjectID masking model. 3. Manual discovery schedule disabled after previous scan cycle.
+What causes SQL Server AlwaysOn cluster node switches to trigger 30–60 second Hub outages?,1. Connection string missing MultiSubnetFailover=True. 2. Failover listener DNS propagation delays. 3. SQL server role switching delays during quorum recalculation.
+What causes DCA Edge ID collisions after mass deployment across customer sites?,1. Clone imaging used without regenerating machine SIDs. 2. dca.config files copied manually without cleanup. 3. Auto-registration errors on initial boot.
+What behavior indicates WebSocket fallback to Long Polling without obvious log errors?,1. dca.log shows missing 'WebSocket Connected' but heartbeat pings continue. 2. Increased idle time between sync cycles. 3. Load balancer shows HTTP POST floods instead of WS upgrades.
+What causes SMTP STARTTLS handshake failures only on large attachments?,1. SMTP server allocates TLS handshake window too small. 2. Proxy modifies TLS record size mid-session. 3. Application layer fragmentation on large MIME payloads.
+What triggers DCA scans to repeatedly find devices but meter reads remain blank?,1. Supplies/Meters OIDs missing from printer MIB. 2. DCA scan profiles incomplete after model detection. 3. Device firmware blocks full walk after initial OID set.
+What causes Hub login attempts to trigger multiple 302 redirects then fail?,1. Authentication module stuck in loop between providers. 2. IIS rewrite rules incorrectly applied on login page. 3. OAuth2 token expiration misconfigured.
+What causes Hub search performance degradation even when device counts are steady?,1. SQL full-text index fragmentation. 2. Query plans stale due to schema changes. 3. Background meter imports lock Device table.
+What causes SNMP v2c packet size errors after device firmware upgrades?,1. Device limits max-response size lower post-upgrade. 2. Firewall MTU fragmentation on new OIDs. 3. UDP checksum offloading error in NIC drivers.
+What causes WebAudit agent to fail when scanning devices over VPN tunnels?,1. VPN client MTU restrictions fragment SNMP payloads. 2. SSL handshake fails mid-VPN route switch. 3. Split-tunneling policies block SNMP responses.
+What triggers IIS server to crash during mass Hub device imports?,1. Request queue length exceeded. 2. Dynamic compression filter stack overflow. 3. Application Pool private memory exhaustion.
+What can cause SNMP agent reset loops on printers during DCA bulk scans?,1. Printer CPU overload from concurrent SNMP sessions. 2. SNMP walk exceeds firmware response buffer size. 3. Device firmware watchdog restarts SNMP daemon.
+What causes DCA device discovery to stall halfway through a subnet scan?,1. Printer SNMP agent locks up under load. 2. Network switch enforces storm control on UDP packets. 3. Windows socket exhaustion on DCA host.
+What triggers duplicate WebAudit agents appearing in Hub?,1. USB host machine reinstalled without de-registering Viewer agent. 2. Viewer agent service restarts mid-session with new session ID. 3. Hub heartbeat token mismatch.
+What causes SMTP relay tests to succeed but SMTP alerts for failed supplies to timeout?,1. SMTP server greylisting bulk senders. 2. DNS resolver timeout on recipient MX lookup. 3. SMTP server filters dynamic sender domains.
+What causes WebSocket sessions to disconnect precisely every 5 minutes?,1. Intermediate firewall idle TCP timeout set to 300 seconds. 2. SSL session cache clears too aggressively. 3. Load balancer kills idle WebSocket tunnels.
+What triggers Hub admin logins to fail intermittently during maintenance windows?,1. SQL maintenance plan locks user authentication tables. 2. App pool recycle window collides with login session token issuance. 3. SSL renegotiation mid-authentication handshake.
+What can cause Hub scheduled reports to contain different device counts from ad hoc reports?,1. Report filters cache differently under scheduled jobs. 2. SQL Server transaction isolation levels differ. 3. Scheduled jobs execute against stale snapshot data.
+What indicates DCA crash recovery failed after Windows blue screen event?,1. DCA service starts but never registers with Hub. 2. dca.log shows missing registration string. 3. SNMP device discovery jobs stuck at 0% progress.
+What causes WebAudit viewer agents to stop scanning after Windows feature updates?,1. USB driver stack replaced. 2. Local SNMP services disabled during upgrade. 3. Antivirus blocks reinstalled Viewer executables post-patch.
+What causes SQL tempdb to remain full even after rebooting the server?,1. Explicit file growth limits reached. 2. System database recovery replays large tempdb transactions. 3. Pending shrink tasks blocked by active sessions.
+What causes SNMP fallback from v2c to v1 across an entire subnet suddenly?,1. WAN firewall drops SNMPv2c packets exceeding certain MTU. 2. Printer firmware downgrade to legacy SNMP support. 3. DCA scan concurrency overload triggers fallback misbehavior.
+What triggers SSL certificate validation failures only during Hub scheduled report dispatches?,1. SMTP relay enforces stricter cert checks during off-peak hours. 2. Intermediate proxy certificate cache expiration. 3. Report scheduler uses different SMTP handshake method.
+"What causes Hub portal searches to crash on tenants over 10,000 devices?",1. SQL full-text indexes unoptimized for scale. 2. DeviceAttribute table fragmentation. 3. IIS app pool memory capping too low for query results.
+What leads to ghost devices populating after printer fleet firmware upgrades?,1. MAC addresses rewritten by firmware resets. 2. Device serials missing during first SNMP walk. 3. MIB structures altered mid-upgrade.
+What causes DCA devices to flip between online and offline with no network outages?,1. Printer sleep modes disrupting SNMP responsiveness. 2. DCA concurrency set too high causing walk retries. 3. Firewall UTM filters detecting scanning patterns.
+What indicates SNMP supply readings are cached stale values rather than live metrics?,1. Same toner percentages persist through multiple scan cycles. 2. Manual SNMP walk returns different values than scheduled scans. 3. OIDs report 'static' flag on device firmware.
+What causes WebAudit scan failures over mobile hotspot connections?,1. UDP fragmentation not reassembled across carrier NAT. 2. SSL handshake drops during IP roaming event. 3. Mobile carrier applies SNMP-specific port restrictions.
+What triggers SMTP 'Invalid Command Sequence' errors from Hub report dispatch?,1. STARTTLS command issued mid-authentication exchange. 2. SMTP server requires SASL prepended authentication. 3. SMTP command pipelining misalignment.
+What causes RDL remote print jobs to randomly fail after weeks of successful operation?,1. Printer firmware SSL cert cache expires. 2. TCP keepalives blocked by new firewall rule. 3. Remote agent disk space exhaustion.
+What symptoms show SQL Server memory pressure impacting device imports?,1. Import jobs stall midway through progress bars. 2. Page Life Expectancy drops sharply. 3. Buffer pool allocations fail in SQL logs.
+What causes DCA discovery to succeed but license validation to quietly fail afterward?,1. License server SSL cert expired. 2. Public key mismatch after DCA upgrade. 3. Session heartbeat timeout exceeded during long scans.
+What can cause duplicate devices to appear after a failed tenant sync?,1. Hub transaction rollback mid-device merge. 2. Partial schema version upgrades. 3. Device fingerprint collision without full serial/MAC match.
+What causes Hub API integrations to throw 500 Internal Server Errors during mass exports?,1. Report queries exceed configured HTTP timeout. 2. SQL Server cursor memory exhaustion. 3. IIS request throttling at API gateway.
+What leads to device attributes importing blank despite successful device discovery?,1. SNMP OIDs misaligned post firmware update. 2. DCA scan profile missing attribute mappings. 3. Timeout mid-walk before attribute retrieval.
+What causes Hub SMTP tests to show 'Success' but no actual emails received?,1. SMTP server accepted test payload but discarded without bounce. 2. SPF/DKIM validation failures at recipient server. 3. SMTP graylisting on recipient side.
+What causes Edge ID re-registration loops on seemingly healthy DCAs?,1. Machine SID corruption. 2. Local dca.config Edge ID key manually deleted. 3. Hub licensing server fails heartbeat validation mid-session.
+What causes SNMP supply levels to occasionally reset to 100% without toner change?,1. Printer supply reset scripts trigger during maintenance. 2. SNMP supply fields reinitialize after reboot. 3. Firmware upgrade zeroes out supply counters temporarily.
+What can cause Printanista device removal to stall for weeks despite device inactivity?,1. Orphaned device cleanup task scheduled too infrequently. 2. Device heartbeat metadata mismatch preventing deletion. 3. SQL lock contention on Device table.
+What indicates WebSocket frame size mismatches affecting DCA heartbeats?,1. Ping/pong responses show size variances exceeding SSL frame window. 2. SSL session renegotiation errors logged every 15 minutes. 3. Hub logs show WebSocket Close frames with abnormal payloads.
+What triggers IIS Application Pool recycling repeatedly during background device imports?,1. Private memory thresholds breached. 2. Request queue overflows. 3. Kernel-mode authentication failures on SQL proxy queries.
+What causes SNMP trap reception by Hub to silently fail even though ports are open?,1. Hub firewall not allowing inbound unsolicited SNMP traps. 2. SNMP service not properly bound to expected listening interfaces. 3. Hub ignoring traps due to source IP mismatch.
+What can cause Hub reports to exclude newly added devices even after successful discovery?,1. Report filters cached before device sync completed. 2. Hub indexing delay post-import. 3. Scheduled report window snapshot outdated.
+What causes DCA crash-on-scan when encountering certain Canon or HP printers?,1. Printer SNMP agent returns malformed OID branches. 2. SNMP payload exceeds 32-bit memory limit handling. 3. Walk thread exception unhandled in legacy DCA builds.
+What causes Hub users to be logged out suddenly during normal activity?,1. Authentication token TTL exceeded. 2. App pool recycling mid-session. 3. SSL session renegotiation invalidating cookie.
+What triggers DCA scans to stall on printers with embedded web servers?,1. Web server SSL handshake conflicts with SNMP walk sessions. 2. Printer embedded servers consume too much RAM during concurrent sessions. 3. TCP socket reuse failures under heavy discovery loads.
+What causes IIS Application Pool to refuse to restart after SSL certificate update?,1. SSL bindings pointing to missing thumbprint. 2. ApplicationHost.config corruption. 3. Certificate store permissions revoked by Group Policy.
+What symptoms show SNMP v3 privacy keys are misaligned between DCA and printer?,1. SNMP discovery completes but meter reads fail. 2. Authentication succeeds but no encrypted data is retrieved. 3. SNMP agent returns decryption failure trap codes.
+What causes Hub licensing module to timeout during large tenant license validations?,1. Public key parsing overloads .NET crypto stack. 2. SQL licensing table lock during heavy Edge ID writes. 3. Licensing service thread starvation under heartbeat load.
+What causes RDL remote print jobs to intermittently pause with 'Job Held' status?,1. Printer requests user PIN validation not handled by Hub. 2. Printer SSL session dropped during job spool. 3. Remote agent disk buffer fills mid-transmission.
+What causes SQL Server AlwaysOn secondary nodes to reject Hub device import operations?,1. Secondary replicas set to read-only failover mode. 2. Write-intent queries misrouted to wrong node. 3. Read-write routing table entries expired.
+What indicates WebAudit Viewer agents are incorrectly caching SNMP OID trees?,1. Devices appear online but supply levels are missing. 2. Viewer agent resends stale supply data across multiple scans. 3. Hub shows static toner levels for weeks.
+What causes SMTP STARTTLS negotiation to fail randomly across tenants?,1. SMTP relay certificate expired mid-handshake. 2. DNS resolver points tenant SMTP records to wrong mail servers. 3. SMTP server cluster rotates backend nodes unexpectedly.
+What symptoms show DCA TCP session pool exhaustion during discovery floods?,1. SNMP discovery slows dramatically despite low CPU. 2. Windows Event ID 4227 logged. 3. TCP ephemeral port exhaustion detected via netstat.
+What triggers device serial number mismatches after printer fleet firmware updates?,1. Firmware overwrites serial field in SNMP agent. 2. MAC address shift without IP refresh. 3. Device resets sysObjectID branch.
+What causes Printanista Hub portal to hang at 'Loading Devices' after login?,1. SQL Server session spooling delay. 2. Device Attribute tables deadlocked. 3. IIS App Pool thread queue saturation.
+What leads to orphan device cleanup jobs skipping scheduled execution?,1. SQL Agent service disabled. 2. Windows Task Scheduler permissions changed. 3. Hub cleanup script errors during cron expression parsing.
+What causes SNMPv1 fallback behavior to fail completely on specific printers?,1. Device firmware disables v1 fallback intentionally. 2. Access control list blocking v1 community strings. 3. SNMP walk agent crashes during downgrade attempt.
+What triggers Hub device group rebalancing despite no admin changes?,1. Automated policy re-evaluation after tenant sync. 2. Device OID reclassification post scan. 3. IP ranges reassigned dynamically inside scan profiles.
+What can cause DCA service recovery attempts to flood Windows logs?,1. Service Recovery settings configured for 1 second retries. 2. Windows SCM RetryThrottle disabled. 3. Anti-virus conflicts forcing DCA hard restarts.
+What causes WebAudit agent registrations to fail silently after Windows patches?,1. NetFramework rollback disabling API binding. 2. USB Controller driver mismatch. 3. Local Viewer service account permissions reset.
+What symptoms show SMTP retry storms impacting scheduled reports?,1. Delayed email notifications across multiple tenants. 2. Hub event logs flood with SMTP reconnect attempts. 3. Background scheduler thread CPU spikes.
+What causes Hub login redirects to loop infinitely after authentication?,1. SAML assertion token size exceeds IIS request buffer. 2. Authentication cookie domain mismatch. 3. Reverse proxy rewrites login callback URLs incorrectly.
+What triggers SQL Server spinlocks to throttle report generation under load?,1. Insufficient partitioning on report source tables. 2. MAXDOP setting too low during export. 3. Tempdb spills exceeding available IOPS.
+What causes DCA heartbeat pings to report healthy but device uploads to stall?,1. Partial loss of outbound HTTPS traffic paths. 2. SSL renegotiation errors interrupt post-registration sessions. 3. SNMP scan threads deadlocked mid-walk.
+What causes SMTP STARTTLS negotiation to succeed but emails bounce afterward?,1. SPF/DKIM validation failures at SMTP server. 2. SMTP server enforcing DMARC policies blocking unsigned payloads. 3. Anti-spam filtering triggers post-handshake.
+What can cause Hub portal report templates to disappear after upgrade?,1. Reports folder overwritten without merging during patching. 2. IIS virtual directory misconfiguration post-upgrade. 3. Database schema mismatch in Reports catalog.
+What causes SNMP OIDs to intermittently vanish during walk attempts?,1. Printer SNMP agents entering sleep mode. 2. Device firmware memory leaks reallocating MIB trees. 3. SNMP buffer overflow mid-walk due to large table returns.
+What indicates WebSocket TLS renegotiation triggers unintended disconnects?,1. Heartbeats switch from pong to reset mid-session. 2. DCA logs WebSocket closure codes repeatedly. 3. SSL handshake errors appear without explicit session errors.
+What triggers DCA Edge ID expiration despite recent active scanning?,1. Licensing heartbeat validation missed. 2. Hub side database TTL exceeded. 3. EdgeID manually cleared by admin from portal.
+What causes Hub scheduled device scans to overlap and cause portal slowness?,1. Cron expressions collide. 2. SQL server parallel scan job limit exceeded. 3. IIS App Pool concurrent request queue overflow.
+What causes SMTP relay authentication to fail only for specific user accounts?,1. SMTP AUTH profile assigned per user mismatches policy. 2. TLS handshake differs depending on user attributes. 3. Email relay implements per-user SPF validation rules.
+What causes SQL tempdb version store bloat during Hub report exports?,1. Snapshot isolation used excessively on large tenants. 2. Large device attribute diffs held open mid-query. 3. Autogrowth fragmentation throttles tempdb spillover.
+What causes SNMPv3 authentication success but supply readings remain blank?,1. Printer restricts SNMP OID access even after successful authentication. 2. Device privacy protocols mismatched despite auth success. 3. Meter OIDs mapped incorrectly in scan profile.
+What indicates RDL remote print jobs are throttled mid-stream by printer?,1. Print job splits into smaller payloads post SSL negotiation. 2. Printer buffer exhaustion triggers session drop. 3. Printer internal watchdog resets print agent thread.
+What causes DCA devices to report correct IPs but incorrect models after network changes?,1. DHCP lease reuse without MAC address validation. 2. Printer firmware misreporting sysObjectID. 3. DCA device fingerprinting cache not cleared during re-scan.
+What triggers SNMP discovery storms when subnet boundaries shift dynamically?,1. IP ranges auto-expanded by DHCP pool growth. 2. Layer 3 switches flood ARP tables after VLAN reassignment. 3. DCA scheduled scans no longer match optimized IP groupings.
+What causes WebSocket handshake failures only on certain corporate Wi-Fi networks?,1. Captive portal injects SSL header garbage. 2. Wi-Fi controller modifies TCP keepalive timers mid-session. 3. Firewall enforces TLS inspection selectively.
+What causes SNMP scans to show printer uptime reset without reboot?,1. Printer SNMP agent service restarts independently. 2. Firmware updates microcode silently without reboot flag. 3. Power-save cycles reset internal uptime counters.
+What symptoms show SNMPv3 engine ID conflicts affecting device scans?,1. Authentication retries escalate unexpectedly. 2. Device responds with authFailure traps. 3. Meter reads blank despite device online status.
+What causes SMTP server STARTTLS responses to be misinterpreted by Hub?,1. SMTP server returns nonstandard STARTTLS banner. 2. TCP proxy alters SMTP handshake midstream. 3. SMTP certificate trust chain incomplete.
+What triggers DCA upgrades to silently fail without user-visible errors?,1. AutoUpdate agent loses write permissions to ProgramData. 2. Antivirus quarantine of update payloads mid-install. 3. User account control (UAC) elevation denied silently.
+"What causes device supply levels to snapshot accurately once, then flatline for weeks?",1. Printer SNMP agent caches supply responses indefinitely. 2. DCA supply OID mapping shifted post-firmware update. 3. Walk retries disabled causing stale readings to persist.
+What can cause SQL Server MAXDOP setting to choke Hub query performance?,1. Too many concurrent cores assigned to small OLTP queries. 2. Parallelism thresholds mismatched to workload type. 3. MAXDOP overrides enforced inconsistently on new indexes.
+What causes Hub scheduled report delivery windows to shift unpredictably?,1. Windows time service drift on Hub server. 2. IIS scheduler threads recycled mid-report. 3. SQL Agent job triggers misfired during maintenance window.
+What causes RDL jobs to print headers but not full document content?,1. SSL/TLS truncation during document push. 2. Printer memory exhaustion at PCL parser level. 3. Incorrect page formatting in RDL job payload.
+What triggers DCA licensing to report 'Pending' even after successful registration?,1. Hub licensing module queued validation handshake. 2. Delayed SSL acknowledgement from reg servers. 3. Device sync jobs throttled due to orphaning backlogs.
+What leads to WebSocket fallback storm conditions under partial network outages?,1. Intermediate routers selectively block 443 traffic by packet inspection. 2. Load balancer switches pools without session stickiness. 3. SSL renegotiation window closes mid-upgrade.
+What can cause DCA discovery schedules to stop running after Windows server updates?,1. Task Scheduler corrupts existing cron job XMLs. 2. Windows SNMP Service dependency fails to auto-start. 3. Firewall resets default SNMP receive rules.
+What causes WebAudit Viewer agents to freeze at 0% scan progress?,1. USB driver failure mid handshake. 2. Viewer SNMP engine mismatches Hub session tokens. 3. Agent registration heartbeat lost during discovery window.
+What causes Printanista Hub portal to crash when exporting reports larger than 500MB?,1. IIS buffer settings insufficient for large responses. 2. SQL server tempdb spillover throttling query output. 3. Web.config requestLimits not adjusted for payloads.
+What triggers SNMP walk timeouts only for supplies but not for meters?,1. Supplies MIB branch reordered post firmware update. 2. Supplies OIDs removed from SNMP read-only agent map. 3. Printer power save interrupts only supplies subtree.
+What causes SMTP relay tests to timeout at exactly 10 seconds?,1. SMTP server drops session at TCP handshake timeout threshold. 2. DNS query delays resolving relay FQDN. 3. Load balancer slow-start policy throttling new SMTP connections.
+What can cause Printanista scheduled scans to fail without error logs?,1. Device sync cron expressions malformed after portal upgrade. 2. IIS request header limit exceeded on discovery job triggers. 3. Background scan worker threads silently deadlocked.
+What triggers orphan device spike after manual DCA reinstallation?,1. Old Edge ID not deactivated before new registration. 2. Hub tenant policies delay reassignment by 72 hours. 3. Stale cached devices matched only by IP address.
+What causes SQL Server page latch contention during Hub background imports?,1. DeviceAttribute table writes without partitioning. 2. Parallel DCA imports stacking inserts. 3. Lack of tempdb optimization under concurrent access.
+What leads to duplicate WebSocket connections on a single DCA install?,1. Windows Service stuck in zombie state during reboot. 2. DCA heartbeat missed previous closure notification. 3. Hub WebSocket session pool not garbage collected quickly.
+What causes SMTP authentication loops during Hub email delivery tests?,1. SMTP relay enforces SASL multi-step auth and Hub retries single-step. 2. TLS upgrade fails mid-login negotiation. 3. Password policy changes trigger re-authentication during sessions.
+What causes SNMP device attribute collection to fail only on high-density printer models?,1. SNMP agent concurrency limits exceeded inside device firmware. 2. Supplies OIDs partitioned incorrectly in firmware after upgrades. 3. UDP socket exhaustion on printer network interface.
+What can cause RDL jobs to vanish from remote printer queues without printing?,1. SSL payload rejected mid-stream. 2. Device enforces firmware-integrity check and blocks unsigned jobs. 3. Timeout mismatch between Hub agent and printer buffer.
+What triggers IIS app pool failures specifically during Hub licensing validation?,1. Licensing API session timeout misfires retries. 2. App pool recycles due to memory overflow after cryptographic operations. 3. SQL query to validate license keys deadlocks.
+What causes WebAudit agent USB interfaces to go into permanent discovery loop?,1. Windows Device Manager re-enumerates USB hubs mid-scan. 2. Antivirus background scans suspend Viewer agent. 3. SSL handshake fails repeatedly with Hub APIs.
+What causes DCA SNMP v2c scans to fallback to v1 only when scanning over VPNs?,1. VPN MTU limits fragment SNMPv2c responses. 2. IPSec overhead exceeds UDP payload thresholds. 3. VPN carrier applies hidden QoS rules throttling SNMP packets.
+What causes SMTP email dispatches from Hub to deliver out of order?,1. SMTP relay load balancing sessions randomly. 2. Windows SMTP client library mishandling multi-threaded sends. 3. Email queue persistence misaligned with MX lookup results.
+What leads to SQL tempdb metadata contention under massive Hub report loads?,1. Dynamic SQL compilation thrashes tempdb system tables. 2. Missing filtered indexes in device queries. 3. Report workers hitting sysallocunits bottlenecks.
+What causes WebSocket sessions to break immediately after TLS renegotiation success?,1. Server resets TCP FIN after completing renegotiation. 2. Client SSL library misreads renegotiated cipher specs. 3. Load balancer drops session stickiness token post-renegotiation.
+What causes DCA registration to fail silently after Windows reboot?,The dca.config file may become unreadable due to locked permissions or corruption.
+What can cause SNMP discovery to skip entire IP ranges?,Incorrect subnet mask settings in the scan profile.
+What triggers SMTP tests from Hub to fail only when TLS is required?,The SMTP server requires STARTTLS negotiation that Hub is not forcing during handshake.
+What causes SQL Server transaction log growth during normal Hub syncs?,Large imports without log backups cause t-log bloating.
+What leads to devices disappearing from Hub but showing online locally?,Edge ID orphan protection timed out before next device heartbeat.
+What causes WebAudit agents to lose connection after scanning?,USB selective suspend policy disables the network adapter handling the agent.
+What can trigger duplicate device serials in Hub?,DHCP lease reuse combined with missing MAC address validation.
+What causes Hub report exports to time out after exactly 60 seconds?,IIS default RequestTimeout of 60 seconds not increased in configuration.
+What causes SNMP supply walks to complete but report 0% toner levels?,The printer firmware no longer exposes live supply OIDs.
+What symptoms suggest SQL Server worker thread exhaustion?,Query queue depth grows rapidly with no CPU spike.
+What causes SMTP relay to reject Hub emails with '550 Authentication required'?,"SMTP server expects authenticated sessions, but Hub is sending without credentials."
+What causes DCA devices to reappear with different MAC addresses?,Network interface card (NIC) hardware changes inside the printer.
+What causes IIS crash loops at Hub login screen?,App pool recycle triggered by authentication thread exceptions.
+What leads to slow device removal from Hub after DCA deactivation?,The orphan protection retention window is still active.
+What causes WebSocket sessions to reset immediately after SSL handshake?,Intermediate proxy strips WebSocket upgrade headers.
+What causes SQL Server deadlocks during mass device sync?,Simultaneous inserts into DeviceAttribute tables without appropriate indexing.
+What causes SMTP STARTTLS failures on older Windows servers?,The OS does not support TLS 1.2 without updated security patches.
+What causes SNMP fallback from v2c to v1 even with correct community strings?,Device SNMP agents throttle or deny v2c under high load.
+What causes WebAudit Viewer agents to never show registered despite healthy scans?,The heartbeat token exchange failed due to SSL inspection breaking the handshake.
+What causes Hub device sync jobs to stop processing new devices?,SQL Agent job responsible for import tasks is stopped or misconfigured.
+What causes RDL print jobs to hang at 0% submitted?,The SSL connection to the printer backend has failed silently.
+What causes device orphan rates to climb after DCA auto-update?,Edge ID re-registration errors caused by incomplete update scripts.
+What causes SNMP walk retries to increase across an entire subnet?,Firewall IDS temporarily rate-limiting or blocking UDP port 161.
+What causes SMTP server responses to show 'relay not permitted'?,Hub server's public IP not whitelisted in SMTP server policies.
+What causes SQL Server tempdb I/O bottlenecks during Hub report exports?,Tempdb sharing disk with OS or other system databases under I/O contention.
+What leads to SSL errors specifically on WebAudit agent heartbeat connections?,The Viewer agent SSL library mismatch with Hub SSL cert chain.
+What causes device supply percentages to bounce erratically across scans?,Printer firmware resets supplies readings after power events.
+What causes Hub to fail saving new device filters?,IIS request validation blocking due to payload size or malformed data.
+What causes Hub SMTP tests to succeed but no alert emails to generate?,SMTP authentication is OK but background job processing of alert queues is disabled.
+What triggers WebSocket fallback to Long Polling during stable networks?,Load balancer kills idle WebSocket connections silently without TCP RST.
+What causes SNMP device names to appear as blank in Hub?,sysName OID not readable or SNMP agent blocking system tree access.
+What causes SQL Server AlwaysOn failovers to cause Hub UI timeout?,Connection strings missing MultiSubnetFailover=True flag.
+What causes device attributes to mismatch after a full re-scan?,Printer firmware reports modified OIDs post-upgrade.
+What leads to Hub reports exporting corrupt PDFs?,IIS memory recycling mid-render of the report export process.
+What causes SMTP STARTTLS negotiations to silently fail but no errors shown?,The SMTP server STARTTLS advertises incorrectly formatted banners causing silent handshake drops.
+What causes DCA scans to complete but devices marked offline immediately?,Incorrect SNMP community strings configured after firmware changes.
+What causes Hub search results to timeout for specific device queries?,Full-text search catalog corruption.
+What causes WebAudit Viewer agents to flood logs with reconnect attempts?,Viewer service heartbeat retry window misconfigured or network instability mid-handshake.
+What causes SQL Server to deadlock during simultaneous report exports?,Large temp table creation across multiple report workers under default isolation levels.
+What causes Hub scheduled report delivery to miss devices added hours earlier?,Report schedules triggered before new device syncs completed indexing.
+What causes SNMP v1 fallback to fail completely across a site?,Site-wide network ACLs block UDP 161 fallback retries.
+What causes SMTP relay tests from Hub to report 'No STARTTLS support' unexpectedly?,Intermediate firewall stripping STARTTLS capability from server advertisement banners.
+What causes device MAC addresses to flip-flop in Hub even without reboots?,Switch port security moves MAC table entries dynamically after flapping.
+What causes Hub device pages to load blank after login?,The device search API fails due to SQL connection exhaustion.
+What can cause SNMPv3 scans to succeed but supplies missing?,"The privacy (encryption) level is misconfigured, blocking encrypted supply OIDs."
+What causes SMTP alerts to be delayed by hours even when SMTP tests succeed?,The email server throttles message queues during peak traffic without rejecting the initial handshake.
+What causes DCA discovery scans to spike CPU to 100% briefly?,High concurrency SNMP walks overwhelm the available Windows TCP/IP sockets.
+What causes WebSocket disconnects to align exactly with server-side IIS app pool recycling?,"Session state is lost during app pool restart, triggering WebSocket closure."
+What causes SNMP fallback errors when scanning devices behind NAT?,The NAT device mismatches original UDP request/response source IPs causing timeout.
+What leads to report exports from Hub containing incomplete columns?,The report template was not updated to match new device schema fields.
+What causes SMTP servers to bounce messages due to invalid HELO/EHLO commands?,Hub server hostname does not match public DNS entries causing SMTP validation rejection.
+What triggers DCA re-registration prompts even when previously licensed?,Machine SID changes after Windows reinstallation without retaining registry keys.
+What causes WebAudit Viewer agents to succeed scanning but devices appear twice?,Multiple Viewer agents scanning overlapping subnets at the same time.
+What causes SNMP OIDs to partially walk but never reach supply levels?,Printer firmware introduces limits on SNMP tree depth per session.
+What causes IIS to crash under load after Hub upgrades?,Misconfigured application pool settings from older versions not tuned for increased memory needs.
+What causes SMTP email delivery to fail when attachments are included?,Relay server limits attachment sizes below configured Hub report exports.
+What leads to duplicate devices being listed when using RDL agents?,"RDL sends device metadata based on local printer enumeration, not synced SNMP discovery."
+What triggers Hub device orphaning even when DCA remains online?,Hub detects device IP conflict without matching MAC or serial number.
+What causes SQL Server tempdb to grow excessively during Hub report generation?,Heavy use of temp tables for sorting and aggregation operations.
+What causes WebSocket SSL renegotiation to timeout without client errors?,Intermediate SSL proxy changes cipher suites mid-session without re-negotiating properly.
+What leads to SMTP STARTTLS sessions succeeding but emails ending up in spam folders?,Lack of SPF/DKIM validation causing spam score penalties after successful delivery.
+What causes DCA updates to fail silently without user notification?,Windows permissions prevent update payloads from writing to installation directories.
+What causes SNMP trap listening to stop working after server reboots?,Windows SNMP Trap service fails to bind automatically on all interfaces post-boot.
+What causes Hub scheduled reports to export older device data instead of fresh scans?,The report pulls from cached device tables not updated by the latest DCA sync.
+What triggers RDL jobs to spool but never print on encrypted environments?,Printer rejects incoming jobs due to untrusted SSL/TLS certificates.
+What causes SMTP relay to randomly reject connections at specific times?,SMTP maintenance windows or session cap policies rotating servers during batch windows.
+What leads to tempdb contention causing report timeouts even at low device counts?,"Tempdb MDF file grows but associated LDF file becomes full, throttling writes."
+What causes Hub authentication tokens to expire mid-session?,IIS token session cookie expiration time shorter than user expected session.
+What causes SNMPv2c discovery to fail while ICMP ping still succeeds?,UDP-specific firewall rules allow ICMP but block SNMP port 161 responses.
+What causes SQL Agent jobs for device imports to randomly skip execution?,Agent service stops or SQL Server job owner accounts lose permission to execute.
+What causes SMTP STARTTLS negotiation to partially succeed but report 'TLS downgrade' events?,"SMTP relay offers weak ciphers during STARTTLS, forcing client fallback."
+What triggers DCA SNMP scanning to jump from 50ms to 3s per device suddenly?,Network congestion or switch ACL changes temporarily throttle SNMP response traffic.
+What causes Hub report templates to error out during export but work fine during preview?,Export job service uses stricter memory and payload handling than on-screen preview.
+What causes RDL remote print jobs to be accepted but pages print out as random symbols?,Printer expects PCL6 but RDL submits raw PostScript payload without driver alignment.
+What causes SNMPv1/v2c fallback logic to fail when scanning large networks?,"Excessive retries flood the network, causing router-side flood protection to trigger packet drops."
+What causes SMTP relay to accept authentication but fail STARTTLS negotiation?,SMTP servers using opportunistic TLS advertise STARTTLS but silently fail after EHLO.
+What causes SQL Server to deadlock on Hub sync jobs only during overnight operations?,"Nightly database maintenance overlaps scheduled import jobs, causing lock contention."
+What causes DCA services to stop responding after scanning certain older printer models?,Malformed SNMP walk responses trigger unhandled exceptions in SNMP parsing thread.
+What causes Hub portal to lose device group assignments after tenant migration?,Device tags tied to old tenant IDs do not remap during bulk migration processes.
+What triggers WebSocket upgrade failures on Hub servers behind reverse proxies?,Reverse proxy modifies 'Connection: Upgrade' headers incorrectly.
+What causes SMTP alerts to randomly delay based on tenant?,Tenant-specific SMTP settings use different relay servers with inconsistent performance.
+What causes Hub login pages to loop after successful authentication?,"OAuth callback URL misconfigured in app settings, redirecting user to stale auth tokens."
+What leads to devices disappearing from RDL queues after printer firmware updates?,Printer security policies enabled that reject unauthenticated print jobs from remote agents.
+What causes SNMPv3 walks to return supply data but no meter reads?,Different MIB view settings applied by device firmware separating meter from supply branches.
+What causes Hub reports to pull outdated device supply levels?,The report runs before the latest DCA scan uploads supply data to the Hub.
+What can cause SMTP server to reject Hub emails only when report attachments are large?,Attachment size exceeds SMTP server maximum configured payload limit.
+What causes SNMP supply walks to timeout specifically on color MFPs?,"Color models have larger MIB trees, increasing SNMP walk session times beyond default timeouts."
+What causes WebSocket handshake failures only from certain DCA locations?,Location-specific firewalls inspect SSL traffic and block WebSocket upgrades.
+What triggers IIS worker process crashes during peak device sync?,Memory fragmentation due to handling large concurrent WebSocket and API requests.
+What causes SQL Server tempdb contention during Hub license validation windows?,Licensing API queries write temporary tables excessively under high Edge ID volumes.
+"What causes RDL remote print jobs to succeed only on mono printers, not color?","Color profile negotiation fails between RDL agent and printer, corrupting job stream."
+What leads to SMTP tests succeeding but real alert emails flagged as spam?,Missing SPF or DKIM records for the Hub SMTP sending domain.
+What causes DCA devices to lose MAC address entries after network changes?,"Switch ACLs modify ARP table response behavior, masking original MAC addresses."
+What causes Hub report exports to randomly fail after completing 90% of data generation?,SQL timeout during report aggregation when large tenant datasets collide.
+What causes SNMP walk retries to spike only after business hours?,Printer sleep modes reduce SNMP agent responsiveness overnight.
+What causes Hub search queries to fail with 'No devices found' even though devices exist?,Tenant context mismatch in Hub portal session cache.
+What causes SMTP authentication retries to flood SMTP relay logs?,SMTP server enforces session limits and delays responses to enforce greylisting.
+What causes SNMP v2c discovery to fall back to ICMP-only discovery?,UDP traffic silently dropped or shaped after network policy updates.
+What causes RDL direct print jobs to appear successful but printers show 'Invalid Format'?,Printer firmware rejects unauthenticated print jobs based on SSL payload headers.
+What causes Hub portal filters to stop applying device group rules?,Device attribute fields required by the group policy missing from newly synced devices.
+What causes DCA upgrades to break Edge ID retention?,Installer does not properly reapply machine SID to Edge ID mapping post-install.
+What triggers WebAudit Viewer registration failures only over VPN?,VPN SSL inspection modifies API handshake headers.
+What causes SMTP relay to return 'Invalid recipient' during alert dispatch?,The SMTP server enforces strict RCPT TO address validation against its local directory.
+What causes SQL Server to hit Tempdb Metadata contention during concurrent scan uploads?,Multiple DCA imports writing to same schema tables without partitioned inserts.
+What causes SNMP trap listening to fail for newly added printers?,"Hub SNMP listener is bound to specific interfaces, missing traps from new VLANs."
+What causes IIS to stop serving Hub portal login pages after SSL cert replacement?,SSL binding mismatch or missing intermediate certificates on the IIS server.
+What triggers Hub scheduled reports to show incomplete page counts?,Report rendering fails mid-merge due to memory thresholds being hit.
+What causes SMTP delivery to succeed but attachment links to break after report dispatch?,"Relay server scans and modifies outbound links, corrupting embedded paths."
+What causes DCA to scan devices successfully but report all supply levels as 0%?,"Printer SNMP agent only refreshes supplies after print activity, not live during idle."
+What causes Hub portal to loop between login and dashboard endlessly?,Session cookie domain mismatch or corruption after authentication handoff.
+What causes WebSocket upgrade requests to fail under SSL offloading configurations?,Load balancer terminates SSL but does not forward WebSocket headers properly.
+What triggers RDL remote printing sessions to stall indefinitely?,Remote print agent's local spooler crashes without completing SSL job submission.
+What causes SNMP discovery delays immediately after mass printer firmware updates?,New firmware resets SNMP agent configurations requiring longer walk times.
+What causes SQL Server deadlock graphs to point to DeviceAttribute tables?,Concurrent write operations on non-partitioned attribute datasets.
+What causes SMTP STARTTLS negotiations to report 'SSL alert: access denied'?,SMTP relay imposes client certificate validation unexpectedly during session start.
+What causes DCA devices to scan successfully but Hub shows missing serial numbers?,Printer SNMP agents omit sysSerialNumber OID or return blank entries.
+What causes WebAudit Viewer agents to time out scanning even healthy devices?,Device SSL cert validation delays response times beyond scan timeout thresholds.
+What causes Hub report exports to truncate device lists prematurely?,Export job size exceeds allowed HTTP response limits on IIS settings.
+What causes SMTP relays to accept messages but not deliver based on attachment scanning?,Relay server antivirus engine flags attachments and silently drops payloads.
+What causes SNMP walks to partially succeed but device model fields to return blank?,Device firmware blocks sysDescr OIDs from unauthenticated SNMP sessions.
+What causes Hub orphan device cleanups to skip devices that are inactive for weeks?,Orphan criteria mismatch in Hub configuration requiring serial+MAC validation.
+What triggers WebSocket disconnections exactly at TLS renegotiation windows?,"Server enforces SSL session cache TTL limits, forcing renegotiation and closure."
+What causes Hub API integrations to lose authentication mid-stream on large data pulls?,OAuth2 token expiration not refreshed properly during long report generation sessions.
+What causes SMTP relay to throttle Hub scheduled report emails but not SMTP tests?,"Bulk email dispatch triggers relay anti-spam thresholds, but single SMTP tests do not."
+What causes Hub scheduled reports to fail for tenants with thousands of devices?,Large device queries cause SQL timeout before report completes.
+What can cause SMTP servers to return '550 Relaying Denied' only for specific report types?,"SMTP server filters outgoing messages based on subject, content, or attachment patterns."
+What causes DCA devices to scan but not populate supplies until reboot?,Printer SNMP agent cache needs reset after walk session expiration.
+What causes WebSocket sessions to drop exactly at 1-hour intervals?,"Firewall idle TCP timeout is set to 3600 seconds, forcing silent resets."
+What causes SQL Server connections from Hub to spike during mass report runs?,Each report worker opens dedicated database sessions without pooling optimization.
+What causes SNMP discovery to fail when printers are connected via wireless bridges?,Wireless NAT devices strip SNMP responses or rewrite source addresses inconsistently.
+What causes SMTP tests to succeed but Hub alert emails to show DKIM failures?,Outgoing emails lack cryptographic signatures if Hub SMTP relay is external without signing setup.
+What causes RDL remote print jobs to fail silently on specific device models?,Printer firmware version rejects unsigned SSL print jobs when security mode is enabled.
+What causes DCA devices to become 'ghost devices' after subnet readdressing?,Device IPs change without corresponding MAC or serial reassociation in Hub fingerprint tables.
+What causes Hub report templates to suddenly miss columns after an upgrade?,Template mapping schema not refreshed to match new database fields after upgrade.
+What causes SQL Server deadlocks specifically during device import job runs?,Simultaneous inserts into Device and DeviceAttribute tables with default locking behavior.
+What causes SMTP relays to show 'TLS handshake error: unsupported certificate' from Hub?,Hub server SSL libraries outdated or mismatched with SMTP server cipher requirements.
+What causes SNMPv3 device discovery to succeed but fail to retrieve supplies?,SNMP privacy (encryption) parameters differ between discovery phase and data retrieval.
+What causes WebAudit agents to flood logs with heartbeat retries after firmware updates?,Device SSL fingerprints changed and the agent retries registration endlessly.
+What causes Hub orphan device counts to remain high despite device inactivity policies?,Heartbeat data mismatches prevent orphan classification during cleanup passes.
+What causes SMTP server bounces saying '552 Message size exceeds fixed limit'?,Scheduled reports with embedded attachments exceed the relay server's configured size cap.
+What causes SNMP supply walks to timeout after printer firmware rollback?,Firmware rollback resets SNMP agent settings to default low timeouts.
+What causes RDL remote printing queues to duplicate jobs mid-transmission?,SSL sessions renegotiated mid-job causing printer to reaccept initial payload twice.
+What causes IIS server response times to spike only during scheduled Hub scan intervals?,"Web server handles both background API sync and front-end traffic, causing thread saturation."
+What causes WebSocket SSL renegotiations to fail when Hub load balancers rotate sessions?,Load balancer loses SSL session affinity across nodes during session redistribution.
+What causes SMTP relay rejection messages citing 'Sender address verification failed'?,Hub SMTP sender email address does not match configured domain policies on relay server.
+What causes DCA service restarts to fail with 'Port already in use' errors?,Zombie service processes holding TCP/UDP sockets after crash recovery attempts.
+What causes Hub scheduled reports to send but contain zero device entries?,Report filters saved incorrectly or report snapshot triggers before latest sync completed.
+What causes SNMP trap reception to intermittently fail even if ports remain open?,Hub SNMP listener threads exhausted or listener binding fails silently after device flood.
+What causes SQL Server to spike CPU usage during orphan cleanup jobs?,Large full table scans across Device or Heartbeat tables without appropriate indexes.
+What causes SMTP authentication errors citing 'STARTTLS already negotiated'?,Hub attempts to renegotiate TLS mid-authenticated session due to handshake misinterpretation.
+What causes DCA updates to repeatedly fail on systems with antivirus enabled?,Update payloads quarantined or modified mid-deployment by antivirus real-time scanning.
+What causes WebAudit Viewer agents to register successfully but show no discovered devices?,SNMP credentials or scan profile settings missing or incorrect after deployment.
+What causes RDL job payloads to be accepted but never processed on new printer fleets?,Printer device certificates not trusted by RDL agent after SSL verification upgrades.
+What causes WebSocket connections to fallback only during SNMP scans?,"Concurrent SNMP walk threads consume system TCP stack resources, starving WebSocket pings."
+What causes SMTP test emails to arrive but scheduled reports to silently fail delivery?,Scheduled reports handled by different SMTP sessions with longer payloads hitting hidden limits.
+What causes SNMP OID walks to fail partway only when scanning across VLANs?,VLAN ACLs blocking UDP fragments or applying rate limits on high-frequency SNMP traffic.
+What causes SQL Server AlwaysOn clusters to intermittently delay device imports?,Network replication lag across cluster nodes causing temporary stale reads and write rejections.
+What causes Hub API authentication tokens to expire faster than expected?,OAuth token refresh policies differ between Hub backend and API consumer clients.
+What causes DCA devices to duplicate on Hub portal after network topology changes?,MAC addresses masked by Layer 3 routing inconsistencies or rapid IP reassignment.
+What causes SMTP STARTTLS negotiation to drop when scanning multiple relay IPs?,Different SMTP relay nodes offer inconsistent cipher suites causing fallback errors.
+What causes WebAudit Viewer agent heartbeats to flood the Hub server under normal operation?,"Agent scan schedules overlap heartbeat triggers, creating session spikes."
+What causes SQL Server to deadlock report exports even after CPU/memory tuning?,Poor execution plan choices due to outdated SQL statistics or missing filtered indexes.
+What causes WebSocket disconnections to occur only during large report exports?,"Hub portal threads delayed, causing WebSocket keepalive timers to expire under load."
+What causes Hub orphan device cleanups to accidentally delete live devices?,Device heartbeat timestamps misaligned due to server clock drift between DCA and Hub.
+What causes RDL remote print jobs to randomly spool twice on certain firmware versions?,Printer misinterprets SSL session resume attempts as duplicate job requests.

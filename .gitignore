@@ -1,5 +1,6 @@
 venv/
 __pycache__/
+<<<<<<< HEAD
 *.pkl
 *.index
 *.pyc
@@ -22,3 +23,11 @@ __pycache__/
 
 # Jupyter/IPython checkpoints (if used later)
 .ipynb_checkpoints/
+=======
+*.pyc
+*.log
+.cache/
+.DS_Store
+*.gguf
+.env
+>>>>>>> 6bb7c1d (broken apart data and logic from main)
