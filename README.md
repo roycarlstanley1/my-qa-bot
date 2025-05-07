@@ -1,61 +1,95 @@
-# My QA Bot
+🧠 FastAPI + GPT4All Hybrid Techbot
 
-An intelligent Q&A assistant built with FastAPI and semantic search to match user queries against a curated internal knowledge base. Designed for internal support workflows and future integration with Teams Apps.
+A GPU-accelerated technical assistant designed for Tier 3 network - database - software support, built with FastAPI, FAISS, and GPT4All.
 
-## 🔧 Features
 
-- Loads domain-specific Q&A pairs from an internal CSV file
-- Embeds questions using SentenceTransformer for semantic similarity
-- Uses FAISS for fast vector-based nearest-neighbor search
-- Dynamically returns top 1–3 relevant answers in a helpdesk-style format
-- Groups suggestions by category (e.g., "DCA Connectivity")
-- Implements polite fallback messaging when confidence is low
-- Fully REST API-powered (FastAPI), ready for Teams or frontend integration
-- CORS enabled for local frontend or cross-domain clients
+🚀 Features
+Local LLM (Meta-Llama-3-8B via GPT4All)
 
-## 🚀 How to Run
+FAISS-powered semantic RAG (retrieval-augmented generation)
 
-1. Create a virtual environment:
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
+Fully offline — no OpenAI API required
 
-2. Install dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
+Custom prompt persona
 
-3. Run the server:
-    ```bash
-    uvicorn main:app --reload --host 0.0.0.0 --port 8000
-    ```
+Frontend served directly via FastAPI
 
-4. API documentation is available at:
-    - Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
-    - ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)
+🗂 Project Structure
 
-## 📂 File Overview
+├── app/
 
-| File | Purpose |
-|------|---------|
-| `main.py` | FastAPI app logic and question processing |
-| `load_data.py` | (Optional) Preprocess and embed Q&A data |
-| `DMQAPairs.csv` | Internal Q&A data source (not included in repo) |
-| `frontend.html` | Local HTML test interface (if used) |
-| `.gitignore` | Excludes sensitive and build files |
-| `requirements.txt` | Project dependencies |
+│   ├── main.py            # FastAPI backend
 
-## 🔒 Data & Usage Notice
+│   ├── qa_logic.py        # GPT4All integration
 
-This repository contains only the code logic.  
-It is designed to run on internal, proprietary datasets which are **not included** for privacy and compliance reasons.
+│   ├── data_loader.py     # Loads FAISS index + Q&A pairs
 
-**Do not reuse this code with company data unless authorized.**
+│   └── __init__.py
 
-## 📄 License
+├── static/
 
-**Code**: MIT License – The code logic is reusable and adaptable for other data sets.
+│   ├── frontend.html      # Chat UI
 
-**Data**: Not licensed for redistribution. Internal use only.
+│   └── your-logo.png       # Background image
 
+├── data/
+
+│   └── DMQAPairs.csv      # Source data for FAISS
+
+├── requirements.txt
+
+└── README.md
+
+🛠 Setup
+bash
+
+# Clone repo
+git clone https://github.com/youruser/my-qa-bot.git
+cd my-qa-bot
+
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+🔗 Dependencies
+Install system packages:
+
+bash
+sudo apt update && sudo apt install build-essential libopenblas-dev
+
+Install Python packages:
+
+pip install fastapi uvicorn numpy faiss-cpu sentence-transformers gpt4all
+
+💾 Model Setup
+
+Download the model:
+
+From TheBloke/Llama-3-8B-Instruct-GGUF
+
+Place .gguf file in:
+~/.cache/gpt4all/
+
+Set this path in qa_logic.py:
+
+MODEL_PATH = os.path.expanduser("~/.cache/gpt4all/<your_model>.gguf")
+
+🧠 Run It
+
+source venv/bin/activate
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+Then visit:
+
+http://localhost:8000/
+
+📦 Ignore These in Git
+
+venv/
+*.gguf
+__pycache__/
+.cache/
+.gpt4all/
