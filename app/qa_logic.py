@@ -8,7 +8,7 @@ MODEL_PATH = os.path.expanduser("~/.cache/gpt4all/Meta-Llama-3-8B-Instruct-Q6_K.
 local_llm = GPT4All(
     model_name=MODEL_PATH,
     allow_download=False,
-    device="gpu"
+    device="cuda"
 )
 
 def call_rag_fallback(question: str, context_chunks: list[str]) -> str:

@@ -7,7 +7,7 @@ from pathlib import Path
 
 def load_data_and_index():
     # Load data
-    data_path = Path(__file__).resolve().parent.parent / "data" / "DM Q&A Pairs.csv"
+    data_path = Path(__file__).resolve().parent.parent / "data" / "DMQAPairs.csv"
     df = pd.read_csv(data_path)
     questions = df["Question"].tolist()
     answers = df["Answer"].tolist()
