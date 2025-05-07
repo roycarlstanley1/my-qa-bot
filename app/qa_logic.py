@@ -1,8 +1,15 @@
 from gpt4all import GPT4All
 import os
 
-MODEL_PATH = os.path.expanduser("~/.cache/gpt4all/Meta-Llama-3-8B-Instruct>local_llm = GPT4All("Meta-Llama-3-8B-Instruct.Q6_K.gguf", allow_download=T>
-(MODEL_PATH, backend="llama-cuda", allow_download=True)
+os.environ["GPT4ALL_LL_MODEL_PATH"] = "/home/royca/gpt4all/gpt4all-backend/build/libllmodel.so"
+
+MODEL_PATH = os.path.expanduser("~/.cache/gpt4all/Meta-Llama-3-8B-Instruct-Q6_K.gguf")
+
+local_llm = GPT4All(
+    model_name=MODEL_PATH,
+    allow_download=False,
+    device="gpu"
+)
 
 def call_rag_fallback(question: str, context_chunks: list[str]) -> str:
     context_text = "\n".join(context_chunks)
