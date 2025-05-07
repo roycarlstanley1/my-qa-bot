@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ECIbot</title>
+  <style>
+html {
+  height: 100%;
+  background-image: url('/static/eci-logo.png');
+  background-repeat: no-repeat;
+  background-size: cover;          /* or 'contain' for different behavior */
+  background-position: center;
+  background-attachment: fixed;    /* optional: keeps background static while scrolling */
+}
+body {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: rgba(255, 255, 255, 0.9); /* translucent white for readability */
+  padding: 40px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+h1 {
+  text-align: center;
+  margin-top: 0;
+}
+input[type="text"] {
+  width: 80%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+    button {
+      padding: 10px 16px;
+      font-size: 16px;
+      border: none;
+      background-color: #0066cc;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #004a99;
+    }
+
+  </style>
+</head>
+<body>
+
+<h1>Ask Roy — a Tier 3 Tech at ECI</h1>
+
+<div id="chatbox" style="margin-top: 20px;"></div>
+
+<div style="margin-top: 20px;">
+  <input type="text" id="questionInput" placeholder="Type your question here...">
+</div>
+
+<script>
+window.onload = function() {
+  const input = document.getElementById('questionInput');
+  const chatbox = document.getElementById('chatbox');
+
+  function addBubble(text, sender) {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble ' + sender;
+    bubble.style.marginBottom = '10px';
+    bubble.style.padding = '12px';
+    bubble.style.borderRadius = '12px';
+    bubble.style.maxWidth = '80%';
+    bubble.style.fontSize = '16px';
+    bubble.style.lineHeight = '1.4';
+    bubble.style.backgroundColor = sender === 'user' ? '#d1e7ff' : '#e2e2e2';
+    bubble.style.textAlign = sender === 'user' ? 'right' : 'left';
+    bubble.style.marginLeft = sender === 'user' ? 'auto' : '0';
+    bubble.style.marginRight = sender === 'user' ? '0' : 'auto';
+    bubble.innerText = text;
+    chatbox.appendChild(bubble);
+    chatbox.scrollTop = chatbox.scrollHeight;
+  }
+
+  async function askQuestion() {
+    const question = input.value.trim();
+    if (!question) return;
+
+    addBubble(question, 'user');
+    input.value = '';
+    addBubble("Thinking...", 'bot');
+
+    try {
+      const response = await fetch('/ask', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ question })
+      });
+      const data = await response.json();
+
+      const thinking = chatbox.querySelector('.bot:last-child');
+      if (thinking && thinking.innerText === "Thinking...") thinking.remove();
+
+      addBubble(data.answer, 'bot');
+    } catch (error) {
+      console.error("Fetch error:", error);
+      addBubble("Error fetching answer.", 'bot');
+    }
+  }
+
+  input.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      askQuestion();
+    }
+  });
+};
+</script>
+
+
+</body>
+</html>
